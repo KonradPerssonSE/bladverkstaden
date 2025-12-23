@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en" data-root="../">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Order / Request — Bladverkstaden</title>
+    <meta name="description"
+        content="Order microgreens from Bladverkstaden. Simple form for restaurants, companies, and private individuals." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=IBM+Plex+Mono:wght@400;600&family=Montserrat:wght@400;600;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script src="../assets/config.js"></script>
+    <script defer src="../assets/app.js"></script>
+</head>
+
+<body data-page="order">
+    <div class="wrap">
+        <header id="siteHeader"></header>
+        <div id="menuOverlay" class="menuOverlay"></div>
+
+        <main>
+            <section class="panel">
+                <div style="height:12px"></div>
+                <h1>Send your list.</h1>
+                <p>
+                    Think "chef's shopping list": fast, clear, no fuss.
+                    Your progress is saved automatically if you close the page.
+                </p>
+
+                <div class="panel paper mono meta">
+                    <b>Planning:</b> To minimize waste, we grow mostly on demand. Count on approx 2 weeks lead time
+                    (some varieties longer).
+                </div>
+            </section>
+
+            <section class="panel" style="position:relative">
+                <div id="orderStatus" class="panel paper" hidden style="margin-bottom:12px"></div>
+
+                <form id="orderForm">
+
+                    <!-- STEP 1: Who & What -->
+                    <div id="step1">
+                        <div style="height:12px"></div>
+
+                        <fieldset>
+                            <legend class="mono">Who is ordering?</legend>
+                            <div class="row two">
+                                <div>
+                                    <label class="mono meta" for="customerType">Customer Type *</label>
+                                    <select id="customerType" name="customerType" required>
+                                        <option value="Restaurant / Kitchen">Restaurant / Kitchen</option>
+                                        <option value="Company">Company</option>
+                                        <option value="Private (Malmö only)">Private (Malmö only)</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row two">
+                                <div>
+                                    <label class="mono meta" for="firstName">First Name *</label>
+                                    <input id="firstName" name="firstName" required placeholder="First Name" />
+                                </div>
+                                <div>
+                                    <label class="mono meta" for="lastName">Last Name *</label>
+                                    <input id="lastName" name="lastName" required placeholder="Last Name" />
+                                </div>
+                            </div>
+                            <div class="row two">
+                                <div>
+                                    <label class="mono meta" for="email">E-mail *</label>
+                                    <input id="email" name="email" type="email" required
+                                        placeholder="name@domain.com" />
+                                </div>
+                                <div>
+                                    <label class="mono meta" for="phone">Phone *</label>
+                                    <input id="phone" name="phone" inputmode="tel" required placeholder="07x..." />
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend class="mono">Your List</legend>
+                            <div class="mono meta" style="margin-bottom:8px">Unit: Box (14x14cm)</div>
+
+                            <div id="orderItems"></div> <!-- JS injects items here -->
+
+                            <div class="actions">
+                                <button class="btn secondary" type="button" id="addItem" style="border-style:dashed">+
+                                    ADD ROW</button>
+                            </div>
+                        </fieldset>
+
+                        <div class="actions">
+                            <button class="btn" type="button" id="btnNext">PROCEED &rarr;</button>
+                        </div>
+                    </div>
+
+
+                    <!-- STEP 2: Delivery & Details -->
+                    <div id="step2" hidden>
+                        <div style="height:12px"></div>
+
+                        <fieldset>
+                            <legend class="mono">Delivery</legend>
+                            <div class="row two">
+                                <div>
+                                    <label class="mono meta" for="deliveryAddress">Delivery Address *</label>
+                                    <textarea id="deliveryAddress" name="deliveryAddress" class="paperArea mono"
+                                        rows="3" required placeholder="Street, Zip, City"></textarea>
+                                </div>
+                                <div>
+                                    <label class="mono meta" for="deliveryWhen">Desired Delivery</label>
+                                    <input id="deliveryWhen" name="deliveryWhen" placeholder="e.g. week 2, Tuesday" />
+
+                                    <div style="height:12px"></div>
+                                    <label class="mono meta" for="recurring">Recurring?</label>
+                                    <select id="recurring" name="recurring">
+                                        <option value="One-time">One-time</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Bi-weekly">Bi-weekly</option>
+                                        <option value="As needed">As needed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset id="invoiceDetails">
+                            <legend class="mono">Invoice & Company</legend>
+                            <div class="row two">
+                                <div>
+                                    <label class="mono meta" for="company">Company / Restaurant *</label>
+                                    <input id="company" name="company" placeholder="Company Name" />
+                                </div>
+                                <div>
+                                    <label class="mono meta" for="orgNr">Org.nr (VAT)</label>
+                                    <input id="orgNr" name="orgNr" placeholder="55xxxx-xxxx" />
+                                </div>
+                            </div>
+                            <div style="margin-top:12px">
+                                <label class="mono meta" for="invoiceEmail">Invoice E-mail (if different)</label>
+                                <input id="invoiceEmail" name="invoiceEmail" type="email" placeholder="invoice@..." />
+                            </div>
+                        </fieldset>
+
+                        <details style="margin-bottom:24px; cursor:pointer">
+                            <summary class="btn secondary"
+                                style="list-style:none; display:flex; justify-content:space-between; align-items:center;">
+                                <span class="mono">OTHER / NOTES</span> <span>+</span>
+                            </summary>
+                            <div style="margin-top:12px">
+                                <label class="mono meta" for="notes">Allergies, door code, other...</label>
+                                <textarea id="notes" name="notes" class="paperArea mono" rows="4"></textarea>
+                            </div>
+                        </details>
+
+                        <div class="actions">
+                            <button class="btn" type="submit">SEND ORDER</button>
+                        </div>
+                    </div>
+
+                </form>
+            </section>
+        </main>
+
+        <footer id="siteFooter"></footer>
+    </div>
+</body>
+
+</html>

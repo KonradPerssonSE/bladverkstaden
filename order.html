@@ -1,14 +1,18 @@
 <!doctype html>
 <html lang="sv" data-root="">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Beställ / Offert — Bladverkstaden</title>
-  <meta name="description" content="Beställ microgreens från Bladverkstaden. Enkelt formulär för restaurang, storkök, företag och privatpersoner." />
+  <meta name="description"
+    content="Beställ microgreens från Bladverkstaden. Enkelt formulär för restaurang, företag och privatperson." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=IBM+Plex+Mono:wght@400;600&family=Montserrat:wght@400;600;800;900&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="assets/styles.css" />
   <script src="assets/config.js"></script>
@@ -22,123 +26,141 @@
 
     <main>
       <section class="panel">
-        <div class="kicker mono">Beställ / offertförfrågan</div>
         <div style="height:12px"></div>
         <h1>Skicka din lista.</h1>
         <p>
-          Tänk “kockens inköpslista”: snabbt, tydligt, utan krångel.
-          Vi återkommer med bekräftelse, leveransupplägg och ev. följdfrågor.
+          Tänk "inköpslista": snabbt, tydligt, inget krångel.
+          Dina uppgifter sparas automatiskt i webbläsaren om du stänger sidan.
         </p>
 
         <div class="panel paper mono meta">
-          <b>Planering:</b> För minimalt svinn odlas mycket på beställning. Räkna ofta med ca 2 veckors ledtid (vissa sorter längre).
-          <br><b>Storkök/restaurang:</b> vi säljer även via grossist, men större ordrar mår bra av en heads-up.
+          <b>Planering:</b> För att minska svinn odlar vi mest på beställning. Räkna med ca 2 veckors ledtid
+          (vissa sorter längre).
         </div>
       </section>
 
-      <hr>
-
-      <section class="panel">
-        <h2>Formulär</h2>
-
-        <div id="orderStatus" class="panel paper" hidden></div>
-        <div style="height:12px"></div>
+      <section class="panel" style="position:relative">
+        <div id="orderStatus" class="panel paper" hidden style="margin-bottom:12px"></div>
 
         <form id="orderForm">
-          <fieldset>
-            <legend class="mono">Vem beställer?</legend>
-            <div class="row two">
-              <div>
-                <label class="mono meta" for="customerType">Kundtyp</label>
-                <select id="customerType" name="customerType" required>
-                  <option value="Restaurang / storkök">Restaurang / storkök</option>
-                  <option value="Företag">Företag</option>
-                  <option value="Privatperson (Malmö)">Privatperson (Malmö)</option>
-                  <option value="Annat">Annat</option>
-                </select>
-              </div>
-              <div>
-                <label class="mono meta" for="company">Företag / Restaurang</label>
-                <input id="company" name="company" placeholder="valfritt för privatperson" />
-              </div>
-            </div>
 
-            <div class="row two">
-              <div>
-                <label class="mono meta" for="contactName">Kontaktperson *</label>
-                <input id="contactName" name="contactName" required placeholder="namn" />
-              </div>
-              <div>
-                <label class="mono meta" for="orgNr">Org.nr</label>
-                <input id="orgNr" name="orgNr" placeholder="valfritt" />
-              </div>
-            </div>
+          <!-- STEP 1: Who & What -->
+          <div id="step1">
+            <div style="height:12px"></div>
 
-            <div class="row two">
-              <div>
-                <label class="mono meta" for="email">E-post *</label>
-                <input id="email" name="email" type="email" required placeholder="namn@domän.se" />
-              </div>
-              <div>
-                <label class="mono meta" for="phone">Telefon</label>
-                <input id="phone" name="phone" inputmode="tel" placeholder="valfritt" />
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend class="mono">Leverans</legend>
-            <div class="row two">
-              <div>
-                <label class="mono meta" for="deliveryAddress">Leveransadress</label>
-                <textarea id="deliveryAddress" name="deliveryAddress" class="paperArea mono" placeholder="gata, postnr, stad"></textarea>
-                <div class="help mono meta">Tips: skriv portkod/lastzon om relevant.</div>
-              </div>
-              <div>
-                <label class="mono meta" for="deliveryWhen">Önskad leverans (datum/vecka)</label>
-                <input id="deliveryWhen" name="deliveryWhen" placeholder="t.ex. v.2, tisdag fm" />
-                <div style="height:12px"></div>
-                <label class="mono meta" for="recurring">Återkommande</label>
-                <select id="recurring" name="recurring">
-                  <option value="Engångs">Engångs</option>
-                  <option value="Varje vecka">Varje vecka</option>
-                  <option value="Varannan vecka">Varannan vecka</option>
-                  <option value="Efter behov">Efter behov</option>
-                </select>
-
-                <div style="height:14px"></div>
-                <div class="panel paper mono meta">
-                  <b>Obs:</b> Om du behöver väldigt stora volymer eller en ny sort, skriv det i “Övrigt”.
+            <fieldset>
+              <legend class="mono">Vem beställer?</legend>
+              <div class="row two">
+                <div>
+                  <label class="mono meta" for="customerType">Kundtyp *</label>
+                  <select id="customerType" name="customerType" required>
+                    <option value="Restaurang / Kök">Restaurang / Kök</option>
+                    <option value="Företag">Företag</option>
+                    <option value="Privat (Endast Malmö)">Privat (Endast Malmö)</option>
+                    <option value="Annat">Annat</option>
+                  </select>
                 </div>
               </div>
-            </div>
-          </fieldset>
+              <div class="row two">
+                <div>
+                  <label class="mono meta" for="firstName">Förnamn *</label>
+                  <input id="firstName" name="firstName" required placeholder="Förnamn" />
+                </div>
+                <div>
+                  <label class="mono meta" for="lastName">Efternamn *</label>
+                  <input id="lastName" name="lastName" required placeholder="Efternamn" />
+                </div>
+              </div>
+              <div class="row two">
+                <div>
+                  <label class="mono meta" for="email">E-post *</label>
+                  <input id="email" name="email" type="email" required placeholder="namn@domän.se" />
+                </div>
+                <div>
+                  <label class="mono meta" for="phone">Telefon *</label>
+                  <input id="phone" name="phone" inputmode="tel" required placeholder="07x..." />
+                </div>
+              </div>
+            </fieldset>
 
-          <fieldset>
-            <legend class="mono">Din lista</legend>
+            <fieldset>
+              <legend class="mono">Din lista</legend>
+              <div class="mono meta" style="margin-bottom:8px">Enhet: Låda/Tråg (14x14cm)</div>
 
-            <div class="itemsHeader mono meta">
-              <div>Produkt</div><div>Antal</div><div>Enhet</div>
-            </div>
+              <div id="orderItems"></div> <!-- JS injects "Notepad" rows here -->
 
-            <div id="orderItems"></div>
+              <div class="actions">
+                <button class="btn secondary" type="button" id="addItem" style="border-style:dashed">+ LÄGG TILL
+                  RAD</button>
+              </div>
+            </fieldset>
 
             <div class="actions">
-              <button class="btn secondary" type="button" id="addItem">+ LÄGG TILL RAD</button>
-              <button class="btn" type="submit">SKICKA</button>
+              <button class="btn" type="button" id="btnNext">VIDARE &rarr;</button>
             </div>
-          </fieldset>
 
-          <fieldset>
-            <legend class="mono">Övrigt</legend>
-            <label class="mono meta" for="notes">Notiser / krav / frågor</label>
-            <textarea id="notes" name="notes" class="paperArea mono" placeholder="t.ex. allergener, fakturauppgifter, leveransfönster, osv."></textarea>
-          </fieldset>
 
-          <div class="panel paper mono meta">
-            <b>Tekniskt:</b> Om <span class="mono">orderEndpoint</span> är satt i <span class="mono">assets/config.js</span> skickas formuläret dit (JSON).
-            Annars öppnas ett förifyllt e-postmeddelande.
-          </div>
+            <!-- STEP 2: Delivery & Details -->
+            <div id="step2" hidden>
+              <div style="height:12px"></div>
+
+              <fieldset>
+                <legend class="mono">Leverans</legend>
+                <div class="row two">
+                  <div>
+                    <label class="mono meta" for="deliveryAddress">Leveransadress *</label>
+                    <textarea id="deliveryAddress" name="deliveryAddress" class="paperArea mono" rows="3" required
+                      placeholder="Gata, Postnummer, Ort"></textarea>
+                  </div>
+                  <div>
+                    <label class="mono meta" for="deliveryWhen">Önskad leverans</label>
+                    <input id="deliveryWhen" name="deliveryWhen" placeholder="t.ex. vecka 2, tisdag" />
+
+                    <div style="height:12px"></div>
+                    <label class="mono meta" for="recurring">Återkommande?</label>
+                    <select id="recurring" name="recurring">
+                      <option value="Engångs">Engångs</option>
+                      <option value="Varje vecka">Varje vecka</option>
+                      <option value="Varannan vecka">Varannan vecka</option>
+                      <option value="Vid behov">Vid behov</option>
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset id="invoiceDetails">
+                <legend class="mono">Faktura & Företag</legend>
+                <div class="row two">
+                  <div>
+                    <label class="mono meta" for="company">Företag / Restaurang *</label>
+                    <input id="company" name="company" placeholder="Företagsnamn" />
+                  </div>
+                  <div>
+                    <label class="mono meta" for="orgNr">Org.nr</label>
+                    <input id="orgNr" name="orgNr" placeholder="55xxxx-xxxx" />
+                  </div>
+                </div>
+                <div style="margin-top:12px">
+                  <label class="mono meta" for="invoiceEmail">Faktura E-post (om annan)</label>
+                  <input id="invoiceEmail" name="invoiceEmail" type="email" placeholder="faktura@..." />
+                </div>
+              </fieldset>
+
+              <details style="margin-bottom:24px; cursor:pointer">
+                <summary class="btn secondary"
+                  style="list-style:none; display:flex; justify-content:space-between; align-items:center;">
+                  <span class="mono">ÖVRIGT / NOTERINGAR</span> <span>+</span>
+                </summary>
+                <div style="margin-top:12px">
+                  <label class="mono meta" for="notes">Allergier, portkod, övrigt...</label>
+                  <textarea id="notes" name="notes" class="paperArea mono" rows="4"></textarea>
+                </div>
+              </details>
+
+              <div class="actions">
+                <button class="btn" type="submit">SKICKA BESTÄLLNING</button>
+              </div>
+
         </form>
       </section>
     </main>
@@ -146,4 +168,5 @@
     <footer id="siteFooter"></footer>
   </div>
 </body>
+
 </html>

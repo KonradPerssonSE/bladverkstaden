@@ -1,16 +1,21 @@
 <!doctype html>
 <html lang="sv" data-root="">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bladverkstaden Demo — Microgreens (mikrogrönt) i Malmö</title>
-  <meta name="description" content="Bladverkstaden är en småskalig producent av levande microgreens (mikrogrönt) i Malmö. Jordfri hydroponisk vertikal odling, leverans levande för minsta svinn." />
+  <meta name="description"
+    content="Bladverkstaden är en småskalig producent av levande microgreens (mikrogrönt) i Malmö. Jordfri hydroponisk vertikal odling, leverans levande för minsta svinn." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=IBM+Plex+Mono:wght@400;600&family=Montserrat:wght@400;600;800;900&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="assets/styles.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script src="assets/config.js"></script>
   <script defer src="assets/app.js"></script>
 </head>
@@ -23,26 +28,61 @@
 
     <main>
       <section class="panel">
-        <div class="kicker mono">Småskalig odling / Malmö</div>
         <div style="height:12px"></div>
 
         <h1>Levande microgreens.<br>Odlade i Malmö.</h1>
 
         <p>
           Bladverkstaden är en småskalig producent av levande microgreens (mikrogrönt).
-          Jordfri, hydroponisk vertikal inomhusodling — byggd för restaurangkök och för dig som vill äta mer grönt, oftare.
+          Jordfri, hydroponisk vertikal inomhusodling — byggd för restaurangkök och för dig som vill äta mer grönt,
+          oftare.
         </p>
 
         <div class="actions">
           <a class="btn" href="order.html">BESTÄLL / OFFERT</a>
-          <a class="btn secondary" href="#vad">VAD ÄR MICROGREENS?</a>
+        </div>
+        <div style="text-align:center; margin-top:12px;">
+          <a href="pages/microgreens.html"
+            style="font-weight:600; text-decoration:none; border-bottom:1px solid currentColor;">Vad är microgreens?</a>
         </div>
 
-        <div style="height:14px"></div>
+        <div style="height:24px"></div>
         <div class="facts">
-          <div class="factRow"><b>Plats</b><span>Augustenborgsgatan 18, Malmö</span></div>
+          <div class="factRow">
+            <b>Plats</b>
+            <span><a href="https://maps.google.com/?q=Augustenborgsgatan+18,+Malmö" target="_blank">Augustenborgsgatan
+                18, Malmö</a></span>
+          </div>
           <div class="factRow"><b>Odling</b><span>Hydroponik / vertikal / jordfri</span></div>
-          <div class="factRow"><b>Leverans</b><span>Levande (skörda själv)</span></div>
+          <div class="factRow"><b>Leverans</b><span>Cykel / Grossist / Hämta själv</span></div>
+          <div class="factRow" style="margin-top:8px; border-top:1px dashed #ccc; padding-top:8px; color:green;">
+            <b>Status</b>
+            <span>Batch #11233 odlas nu</span>
+          </div>
+          <div class="mono meta" style="text-align:right">Nästa batch påbörjas Mån 30/12</div>
+        </div>
+      </section>
+
+      <!-- USPs -->
+      <section class="panel" style="margin-top:24px">
+        <h2>Varför Bladverkstaden?</h2>
+        <div class="grid two">
+          <div class="panel paper">
+            <h3 style="display:flex; align-items:center; gap:8px"><i data-lucide="sprout"></i> På beställning</h3>
+            <p class="small">Vi odlar exakt det du behöver. Inget svinn, ingen lagerhållning av gamla produkter.</p>
+          </div>
+          <div class="panel paper">
+            <h3 style="display:flex; align-items:center; gap:8px"><i data-lucide="sun"></i> Levande</h3>
+            <p class="small">Levereras i sitt odlingssubstrat. Skörda precis innan servering för maximal smak.</p>
+          </div>
+          <div class="panel paper">
+            <h3 style="display:flex; align-items:center; gap:8px"><i data-lucide="medal"></i> Kvalitet</h3>
+            <p class="small">Handgjort i Malmö med kärlek och precision.</p>
+          </div>
+          <div class="panel paper">
+            <h3 style="display:flex; align-items:center; gap:8px"><i data-lucide="map-pin"></i> Lokalt</h3>
+            <p class="small">Producerat mitt i stan. Låg energiförbrukning och skräpfri produktion.</p>
+          </div>
         </div>
       </section>
 
@@ -53,7 +93,8 @@
           <h2>Vad är microgreens?</h2>
           <p>
             Microgreens är små skott av grönsaks- och kryddväxter som skördas tidigt.
-            De är enkla att använda: klipp över mackan, salladen eller i en smoothie. Pizza, pasta, pesto — det mesta blir bättre med microgreens.
+            De är enkla att använda: klipp över mackan, salladen eller i en smoothie. Pizza, pasta, pesto — det mesta
+            blir bättre med microgreens.
           </p>
           <p class="mono meta">
             Pro tip: Levande microgreens håller länge i kyl (och minskar svinn).
@@ -129,58 +170,40 @@
 
       <hr>
 
-      <section class="panel paper">
+      <section class="panel paper" style="margin-top:24px">
         <h2>Vänner & kunder</h2>
-        <p class="small">Några platser där du kan hitta våra microgreens, eller inspiration till hur de används.</p>
-        <div class="grid two">
-          <div class="panel">
-            <h3>Restaurang: Quan</h3>
-            <p class="small">Asiatiskt med twist. Våra microgreens dyker upp på tallriken.</p>
+        <p class="small">Se vad vi och våra kunder hittar på. <span class="mono meta">(Bilder hämtas från
+            <code>assets/img/social/</code>)</span></p>
+
+        <!-- Instagram Wall Grid -->
+        <div class="grid two" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));">
+          <!-- TODO: Add actual images to assets/img/social/ -->
+          <div
+            style="aspect-ratio:1; background:#ddd; border-radius:8px; display:grid; place-items:center; text-align:center; padding:10px;">
+            <div class="small"><b>Quan</b><br>Asiatisk fusion med våra skott.</div>
           </div>
-          <div class="panel">
-            <h3>ZeroWaste: Gram Malmö</h3>
-            <p class="small">För dig som tänker cirkulärt och vill handla med mindre förpackningar.</p>
+          <div
+            style="aspect-ratio:1; background:#ddd; border-radius:8px; display:grid; place-items:center; text-align:center; padding:10px;">
+            <div class="small"><b>Gram</b><br>Zero Waste butik.</div>
           </div>
-          <div class="panel">
-            <h3>@matbymonica</h3>
-            <p class="small">Recept och inspiration med microgreens (vår ambassadör).</p>
+          <div
+            style="aspect-ratio:1; background:#ddd; border-radius:8px; display:grid; place-items:center; text-align:center; padding:10px;">
+            <div class="small"><b>@matbymonica</b><br>Inspiration & recept.</div>
           </div>
-          <div class="panel">
-            <h3>Fler?</h3>
-            <p class="small">Vi lägger till fler samarbeten här när vi uppdaterar sajten.</p>
+          <div
+            style="aspect-ratio:1; background:#eec; border-radius:8px; display:grid; place-items:center; text-align:center; padding:10px;">
+            <div class="small"><b>Du?</b><br>Tagga oss!</div>
           </div>
         </div>
       </section>
 
       <hr>
 
-      <section id="kontakt" class="panel">
-        <h2>Kontakt</h2>
-        <div class="grid two">
-          <div class="panel paper">
-            <div class="mono meta"><b>Adress</b></div>
-            <p>Augustenborgsgatan 18, Malmö</p>
-
-            <div class="mono meta"><b>E-post</b></div>
-            <p><a href="mailto:bladverkstaden@gmail.com">bladverkstaden@gmail.com</a></p>
-
-            <div class="mono meta"><b>Telefon</b></div>
-            <p><a href="tel:+46767751826">076 775 18 26</a></p>
-          </div>
-          <div class="panel">
-            <div class="kicker mono">Snabbguide</div>
-            <div style="height:10px"></div>
-            <ul>
-              <li>Vill du ha pris, sortlista och leveransupplägg? → <a href="order.html">Beställ/Offert</a></li>
-              <li>Vill du läsa mer? → <a href="pages/about.html">Om oss</a></li>
-              <li>Vill du se hur vi jobbar med cirkularitet? → <a href="pages/policy.html">Policy</a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      <!-- Contact section removed (moved to footer) -->
     </main>
 
     <footer id="siteFooter"></footer>
   </div>
 </body>
+
 </html>
