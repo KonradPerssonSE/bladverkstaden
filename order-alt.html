@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="sv" data-root="">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smart Crate — Bladverkstaden</title>
+    <meta name="description" content="Ett nytt sätt att beställa." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=IBM+Plex+Mono:wght@400;600&family=Montserrat:wght@400;600;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/styles.css" />
+    <!-- Specific styles for this experiment -->
+    <style>
+        /* Crate Animations */
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .slot.filled {
+            animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Sticky Manager */
+        #crate-manager {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg);
+            border-top: var(--stroke) solid var(--ink);
+            z-index: 100;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .crate-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 12px;
+            scrollbar-width: none;
+        }
+
+        .crate-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .visual-crate {
+            min-width: 200px;
+            border: var(--stroke) solid var(--ink);
+            background: var(--paper);
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+        .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+
+        .slot {
+            aspect-ratio: 1;
+            border: 1px dashed rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+            display: flex;
+            items-align: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .slot.filled {
+            border-style: solid;
+            border-color: var(--ink);
+            background: var(--ink);
+            color: var(--bg);
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-backdrop[hidden] {
+            display: none;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--ink);
+            color: var(--bg);
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-family: "IBM Plex Mono";
+            font-weight: 600;
+            transform: translateY(-100px);
+            transition: transform 0.3s;
+            z-index: 300;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+    </style>
+    <script src="assets/config.js"></script>
+    <script defer src="assets/app.js"></script> <!-- Keep base app for header/footer -->
+    <script defer src="assets/smart-crate.js"></script>
+</head>
+
+<body data-page="smart-crate">
+    <div class="wrap" style="padding-bottom: 200px;"> <!-- Extra padding for sticky bar -->
+        <header id="siteHeader"></header>
+        <div id="menuOverlay" class="menuOverlay"></div>
+
+        <main>
+            <section class="panel">
+                <div style="height:12px"></div>
+                <h1>Smart Crate.</h1>
+                <p>Bygg din order låda för låda (8 st/låda). Optimerat för leverans.</p>
+                <div id="toast" class="toast">Crate Completed!</div>
+            </section>
+
+            <div style="height:24px"></div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid two">
+                <!-- JS Injected -->
+            </div>
+        </main>
+
+        <!-- Sticky Crate Manager -->
+        <div id="crate-manager">
+            <div style="background: var(--paper); border-bottom: var(--stroke) solid var(--ink); padding: 4px 12px;"
+                class="mono meta flex justify-between">
+                <span id="crate-status-text">Laddar...</span>
+                <b id="crate-total-text">0 st</b>
+            </div>
+            <div class="crate-scroll" id="crate-container">
+                <!-- Crates go here -->
+            </div>
+            <div style="padding: 12px;">
+                <button class="btn" onclick="attemptCheckout()">GÅ TILL KASSAN &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Smart Fill Modal -->
+        <div id="smart-fill-modal" class="modal-backdrop" hidden>
+            <div class="panel"
+                style="background:var(--bg); max-width:400px; width:100%; box-shadow: 10px 10px 0 rgba(0,0,0,0.2);">
+                <h2>Fyll lådan?</h2>
+                <p>Du har <b id="modal-slot-count">0</b> tomma platser. Lösa lådor skadas lättare i transporten.</p>
+
+                <div id="modal-visual" class="visual-grid" style="margin: 20px 0; gap:8px;"></div>
+
+                <div class="grid">
+                    <button class="btn" onclick="smartFill('bestseller')">✨ Fyll med Bästsäljare (Pea Shoots)</button>
+                    <button class="btn secondary" onclick="smartFill('double')">Fyll med senaste varan</button>
+                    <button class="btn secondary" style="border:none" onclick="closeModal()">Jag vill ha den
+                        halvfull.</button>
+                </div>
+            </div>
+        </div>
+
+        <footer id="siteFooter"></footer>
+    </div>
+</body>
+
+</html>
