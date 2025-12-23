@@ -1,35 +1,60 @@
-# Bladverkstaden (static site)
+# Bladverkstaden
 
-Minimal statisk sajt (no framework, no build): ren HTML/CSS/vanilla JS.
+En minimal, statisk webbplats för Bladverkstaden (Malmö). Byggd för snabbhet och enkelhet utan ramverk eller byggsteg.
 
-## Struktur
+> **English:** A minimal, static website for Bladverkstaden. Built for speed and simplicity with no frameworks or build steps.
 
-- `index.html` — startsida
-- `order.html` — beställnings-/offertformulär
-- `pages/` — statiska infosidor (om oss, historia, policy)
-- `assets/styles.css` — gemensam styling
-- `assets/app.js` — gemensam navigation + orderform-logik
-- `assets/config.js` — enkel konfig (endpoint, mottagar-mail)
+## ✨ Features
 
-## Publicera på GitHub Pages
+- **No Frameworks:** Ren HTML, CSS och Vanilla JS. Inga `npm install` eller byggprocesser krävs.
+- **Bilingual (SE/EN):** Fullt stöd för Svenska och Engelska med automatisk språkdetektering och speglad struktur (`/en/`).
+- **Order System 2.0:**
+    - **Multi-step:** Uppdelad i "Beställning" och "Leverans" för ökad tydlighet.
+    - **Notepad UI:** Rent, avskalat gränssnitt för att snabbt mata in produkter.
+    - **Persistence:** Innehållet sparas automatiskt i `localStorage` så att inget går förlorat om fliken stängs.
+    - **Reveal Flow:** "Vidare"-knappen visar nästa steg istället för att ladda om sidan.
+- **Mobile First:** Designad specifikt för mobila skärmar (max-width 767px layout).
 
-1. Lägg filerna i ett repo.
-2. Settings → Pages → Deploy from a branch (main / root).
-3. Klart.
+## 📂 Struktur / Structure
 
-## Orderform: hur skickas beställningen?
+```text
+/
+├── index.html            # Startsida (SE)
+├── order.html            # Orderformulär (SE)
+├── pages/                # Infosidor (Om oss, Historia, Policy) (SE)
+├── en/                   # English version (mirrors root structure)
+│   ├── index.html
+│   ├── order.html
+│   └── pages/
+├── assets/
+│   ├── styles.css        # All styling
+│   ├── app.js            # Main logic (Nav, I18N, Order Form)
+│   ├── config.js         # Configuration (Keys, Endpoints)
+│   └── img/              # Images & SVG
+│       └── social/       # Images for Social Grid
+└── README.md
+```
 
-**Default:** Om `orderEndpoint` är tomt öppnas ett förifyllt `mailto:` till `orderToEmail`.
+## 🛠️ Hur man ändrar / How to edit
 
-**Rekommenderat:** Sätt `orderEndpoint` till en webhook som skickar mail åt er.
+### Byt bilder i "Instagram-väggen"
+Lägg bilder i `assets/img/social/`. Uppdatera sedan `index.html` (och `en/index.html`) där sektionen "Vänner & kunder" finns. Byt ut placeholder-divarna mot `<img src="assets/img/social/DIN_BILD.jpg">`.
 
-Exempel-tjänster (enklast först):
-- Make.com / Zapier / Pipedream webhook → skicka mail
-- Typeform (om ni vill gå den vägen) → ersätt order.html med inbäddning eller webhook
-- Brevo (via en liten serverless proxy, eftersom API-nyckel inte ska ligga i frontend)
+### Lägg till produkter i listan
+Produkterna är definierade i `assets/app.js` under `I18N` objektet:
+- **Svenska:** `I18N.sv.form.defaultProducts`
+- **English:** `I18N.en.form.defaultProducts`
 
-Payload som skickas är JSON och innehåller:
-- kundinfo
-- leveransinfo
-- lista (items)
-- notes
+### Konfigurera Order-mail
+Webbplatsen hanterar beställning på två sätt (inställning i `assets/app.js` via `BV_CONFIG`):
+1.  **Mailto (Default):** Öppnar användarens mailklient med en förifylld text. Ingen server behövs.
+2.  **API/Webhook:** Om en `orderEndpoint` anges i `config.js` (eller window-objektet) skickas datan som JSON dit.
+
+## 🚀 Publicering / Deployment
+Sajten är 100% statisk.
+1.  Ladda upp filerna till GitHub / Netlify / Vercel / FTP.
+2.  Klar.
+
+För **GitHub Pages**:
+- Gå till Settings -> Pages.
+- Välj `main` branch och `/` root som source.
