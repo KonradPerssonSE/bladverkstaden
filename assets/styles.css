@@ -180,6 +180,7 @@ li {
   font-weight: 800;
   /* Restore bold text */
   letter-spacing: 0.02em;
+  text-decoration: none;
 }
 
 .btn:active {
@@ -556,4 +557,9 @@ details>summary {
 
 details>summary::-webkit-details-marker {
   display: none;
+}
+
+.input-error {
+  border-color: #d32f2f !important;
+  background-color: #ffebee !important;
 }

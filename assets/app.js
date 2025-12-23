@@ -34,10 +34,15 @@
         qty: "Antal",
         unit: "Enhet",
         lineNote: "Notering...",
-        statusError: "Kontrollera att alla obligatoriska fält (*) är ifyllda.",
-        statusOk: "Tack! Vi har tagit emot din beställning/offertförfrågan. Vi återkommer så snart vi kan.",
-        statusMail: "Din e-postklient öppnas med ett förifyllt beställningsmail.",
-        statusFail: "Kunde inte skicka.",
+        statusError: "Fyll i de rödmarkerade fälten (*).",
+        statusEmpty: "Listan är tom. Lägg till minst en produkt.",
+        statusOk: "Granska din beställning nedan.",
+        statusMail: "Öppna mail-klient",
+        statusCopy: "Kopiera text",
+        reviewTitle: "Granska & Skicka",
+        reviewIntro: "Kopiera texten och maila till bladverkstaden@gmail.com — eller klicka på knappen.",
+        copied: "Kopierad!",
+        statusFail: "Något gick fel.",
         units: ["Låda"], // Hardcoded for now
         defaultProducts: ["Rädisa", "Broccoli", "Rödkål", "Koriander", "Senap", "Mizuna", "Kinesisk gräslök", "Mix (blandat)", "Annat"]
       }
@@ -69,9 +74,14 @@
         qty: "Qty",
         unit: "Unit",
         lineNote: "Note...",
-        statusError: "Please check that all required fields (*) are filled.",
-        statusOk: "Thanks! We received your order/request. We will get back to you soon.",
-        statusMail: "Your email client will open with a pre-filled draft.",
+        statusError: "Please fill in the highlighted fields (*).",
+        statusEmpty: "The list is empty. Add at least one product.",
+        statusOk: "Review your order below.",
+        statusMail: "Open Email Client",
+        statusCopy: "Copy to Clipboard",
+        reviewTitle: "Review & Send",
+        reviewIntro: "Copy the text and email to bladverkstaden@gmail.com — or click the button.",
+        copied: "Copied!",
         statusFail: "Could not send.",
         units: ["Box"],
         defaultProducts: ["Radish", "Broccoli", "Red Cabbage", "Cilantro", "Mustard", "Mizuna", "Chinese Chives", "Mix", "Other"]
@@ -276,6 +286,20 @@
 
     form.addEventListener("input", saveState);
 
+    // --- Global Validation Styling ---
+    // Capture 'invalid' events (which don't bubble) to apply styling
+    form.addEventListener("invalid", (e) => {
+      e.target.classList.add("input-error");
+    }, true);
+
+    // Remove syling on input
+    form.addEventListener("input", (e) => {
+      if (e.target.validity.valid) {
+        e.target.classList.remove("input-error");
+      }
+    });
+
+
     // --- Item Logic (Notepad Style) ---
     function itemRow(data = {}) {
       const opts = PRODUCTS.map(p => `<option value="${p}" ${data.product === p ? "selected" : ""}>${p}</option>`).join("");
@@ -321,31 +345,13 @@
     });
 
     function goToStep2() {
-      // Validate Step 1
-      const req = step1.querySelectorAll("[required]");
-      let valid = true;
-      req.forEach(r => {
-        if (!r.value) { r.style.borderColor = "red"; valid = false; }
-        else r.style.borderColor = "";
-      });
+      // Just REVEAL Step 2
+      step2.hidden = false;
+      status.hidden = true;
+      if (btnNext) btnNext.hidden = true;
 
-      // Also check at least 1 item
-      if (items.children.length === 0) {
-        setStatus("!", TXT.form.statusError);
-        return;
-      }
-
-      if (valid) {
-        // REVEAL LOGIC: Keep Step 1, Show Step 2, Hide "Next" button
-        step2.hidden = false;
-        status.hidden = true;
-        if (btnNext) btnNext.hidden = true;
-
-        // Actually, let's just scroll to step 2
-        step2.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else {
-        setStatus("!", TXT.form.statusError);
-      }
+      // Validation will happen on SUBMIT
+      step2.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     // No goToStep1 needed for Reveal logic (Step 1 is always there)
@@ -414,7 +420,7 @@
       };
 
       if (payload.items.length === 0) {
-        setStatus("!", "List is empty.");
+        setStatus("!", TXT.form.statusEmpty);
         return;
       }
 
@@ -438,16 +444,44 @@
           window.scrollTo(0, 0);
           return;
         }
-        // mailto
-        const subject = encodeURIComponent(`${subjPrefix} - ${payload.firstName} ${payload.lastName}`);
-        const body = encodeURIComponent(buildPlainText(payload));
-        window.location.href = `mailto:${encodeURIComponent(toEmail)}?subject=${subject}&body=${body}`;
-        setStatus("OK", TXT.form.statusMail);
-        clearState(); // Assume sent
+
+        // Manual Review Flow (No Auto-Reset)
+        const subject = `${subjPrefix} - ${payload.firstName} ${payload.lastName}`;
+        const body = buildPlainText(payload);
+        const mailtoLink = `mailto:${encodeURIComponent(toEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        showReviewModal(body, mailtoLink);
+        clearState(); // We assume they will send it
+
       } catch (err) {
         setStatus("ERR", TXT.form.statusFail);
       }
     });
+
+    function showReviewModal(text, mailto) {
+      status.hidden = false;
+      status.innerHTML = `
+            <div style="border:2px solid var(--ink); padding:14px; background:var(--bg); border-radius:12px;">
+                <h3>${TXT.form.reviewTitle}</h3>
+                <p class="small">${TXT.form.reviewIntro}</p>
+                <textarea class="paperArea mono" readonly style="height:200px; font-size:12px; margin-bottom:12px;" id="reviewText">${text}</textarea>
+                <div class="actions">
+                    <a href="${mailto}" class="btn" target="_blank">${TXT.form.statusMail}</a>
+                    <button type="button" class="btn secondary" id="btnCopy">${TXT.form.statusCopy}</button>
+                </div>
+            </div>
+        `;
+      status.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      document.getElementById("btnCopy").addEventListener("click", (e) => {
+        const el = document.getElementById("reviewText");
+        el.select();
+        navigator.clipboard.writeText(el.value).then(() => {
+          e.target.innerText = TXT.form.copied;
+          setTimeout(() => e.target.innerText = TXT.form.statusCopy, 2000);
+        });
+      });
+    }
 
     // Init
     loadState(); // Auto load on startup
