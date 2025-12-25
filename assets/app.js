@@ -190,7 +190,7 @@
             </nav>
           </div>
           <div class="panel paper">
-             <div style="margin-bottom:12px;"><img src="${root}assets/Bladverkstaden-Huset.svg" alt="" style="width:40px; height:auto; display:block"></div>
+             <div style="margin-bottom:12px;align-items: center;display: flex;flex-direction: column;"><img src="${root}assets/Bladverkstaden-Huset.svg" alt="" style="max-width: 100%;"></div>
             <div class="mono meta" style="margin-bottom:12px; font-weight:800">${TXT.ui.contactInfo}</div>
             <div class="mono small">
               <a href="mailto:bladverkstaden@gmail.com">bladverkstaden@gmail.com</a><br>
