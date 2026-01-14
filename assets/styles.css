@@ -58,7 +58,7 @@ select:focus-visible {
 .wrap {
   max-width: 767px;
   margin: 0 auto;
-  padding: 18px 14px 40px;
+  padding: 18px 0 40px; /* Horizontal padding removed per request */
   box-shadow: 0 0 80px -20px rgba(0, 0, 0, 0.15);
   min-height: 100vh;
   background: var(--bg);
@@ -93,6 +93,7 @@ h3 {
 
 h1 {
   font-size: 34px;
+  font-family: "Berkshire Swash", cursive;
 }
 
 h2 {
@@ -154,7 +155,26 @@ li {
 .actions {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 24px; /* Increased gap */
+  align-items: center;
+  justify-items: center;
+}
+
+/* Secondary link style for "or-link" pattern */
+.or-link {
+  display: inline-block;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 2px;
+}
+
+/* --- UNDER CONSTRUCTION / HIDING --- */
+/* Hiding menu and footer nav for initial launch */
+#menuOpen,
+.navDesktop,
+.footerNav {
+  display: none !important;
 }
 
 /* Mobile only design - forced single column actions
@@ -211,8 +231,8 @@ li {
   justify-content: space-between;
   gap: 10px;
   padding: 12px 14px;
-  border: var(--stroke) solid var(--ink);
-  border-radius: var(--radius);
+  border-bottom: var(--stroke) solid var(--ink); /* Minimal border */
+  border-radius: 0;
   background: var(--bg);
 }
 
