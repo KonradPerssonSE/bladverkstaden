@@ -1,10 +1,12 @@
 /* Bladverkstaden — minimal brutalist system (mobile-first) */
 :root {
+  --black: #000;
   --ink: #000;
   --bg: #fff;
   --paper: #f4efe5;
+  --dimmed-bg: lawngreen;
 
-  --stroke: 2px;
+  --stroke: 4px;
   --radius: 12px;
   --gap: 14px;
   --gap2: 22px;
@@ -26,8 +28,9 @@ body {
   color: var(--ink);
   background: var(--bg);
   font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-weight: 400;
-  line-height: 1.45;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.420;
 
   /* subtle "graph paper" / dots */
   background-image: radial-gradient(rgba(0, 0, 0, .18) 0.55px, transparent 0.6px);
@@ -58,7 +61,7 @@ select:focus-visible {
 .wrap {
   max-width: 767px;
   margin: 0 auto;
-  padding: 18px 0 40px; /* Horizontal padding removed per request */
+  padding: 0;
   box-shadow: 0 0 80px -20px rgba(0, 0, 0, 0.15);
   min-height: 100vh;
   background: var(--bg);
@@ -67,7 +70,6 @@ select:focus-visible {
 hr {
   border: 0;
   display: none;
-  /* User requested removal */
 }
 
 .mono {
@@ -83,25 +85,29 @@ hr {
   font-size: 14px;
 }
 
+#siteFooter .mono.meta {
+  display: none;
+}
+
 h1,
 h2,
 h3 {
   margin: 0 0 10px;
   line-height: 1.1;
-  letter-spacing: -.01em;
 }
 
 h1 {
-  font-size: 34px;
+  font-size: 38px;
   font-family: "Berkshire Swash", cursive;
 }
 
 h2 {
-  font-size: 22px;
+    font-size: 24px;
+    font-weight: 600;
 }
 
 h3 {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 p {
@@ -119,17 +125,22 @@ li {
 
 .panel {
   background: var(--bg);
-  /* border:var(--stroke) solid var(--ink); -- Removed per request */
   border-radius: var(--radius);
-  padding: 16px;
+  padding: 16px 16px;
+}
+
+.panel > .panel {
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .panel.paper {
   background: transparent;
 }
 
-.footer .panel.paper {
+#siteFooter .panel.paper {
   background: var(--paper);
+  border-radius: 0;
 }
 
 .grid {
@@ -155,18 +166,22 @@ li {
 .actions {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px; /* Increased gap */
+  gap: 24px;
   align-items: center;
   justify-items: center;
 }
 
-/* Secondary link style for "or-link" pattern */
 .or-link {
-  display: inline-block;
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 2px solid currentColor;
-  padding-bottom: 2px;
+    font-size: 16px;
+    display: inline-block;
+    padding: 6px 8px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    border-bottom: 2px solid;
+    padding-bottom: 2px;
+    border-end-end-radius: 2px;
+    border-bottom-left-radius: 2px;
 }
 
 /* --- UNDER CONSTRUCTION / HIDING --- */
@@ -189,18 +204,20 @@ li {
   justify-content: center;
   gap: 10px;
   width: 100%;
-  padding: 14px 14px;
+  padding: 14px 14px 12px;
   border: var(--stroke) solid var(--ink);
   border-radius: var(--radius);
   background: var(--bg);
   white-space: nowrap;
-  /* Prevent text wrapping inside button */
-  box-shadow: 4px 4px 0 var(--ink);
+  box-shadow: var(--stroke) var(--stroke) 0 var(--ink);
   cursor: pointer;
+  font-family: "Nunito", sans-serif;
   font-weight: 800;
-  /* Restore bold text */
-  letter-spacing: 0.02em;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 0.03em;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 .btn:active {
@@ -208,7 +225,6 @@ li {
   box-shadow: 2px 2px 0 var(--ink);
 }
 
-/* Ghost / No outline for secondary */
 .btn.secondary {
   box-shadow: none;
   font-weight: 800;
@@ -230,8 +246,8 @@ li {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 12px 14px;
-  border-bottom: var(--stroke) solid var(--ink); /* Minimal border */
+  padding: 12px 14px 0 14px;
+  border-bottom: var(--stroke) solid var(--black);
   border-radius: 0;
   background: var(--bg);
 }
@@ -239,33 +255,30 @@ li {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   min-width: 0;
 }
 
 .brand .mark {
-  width: 30px;
+  width: 52px;
   height: auto;
   border: 0;
   border-radius: 0;
   display: inline-block;
+  margin-bottom: -1px;
 }
 
 .brand .name {
-  font-family: "Nunito", sans-serif;
-  font-weight: 800;
-  /* Extra bold */
-  letter-spacing: -.01em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    font-family: "Nunito", sans-serif;
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: 28px;
 }
 
 .navDesktop {
   display: none;
   gap: 14px;
   align-items: center;
-  font-weight: 800;
 }
 
 .navDesktop a {
@@ -413,17 +426,24 @@ legend {
 }
 
 label {
+  color: var(--ink);
+  font-size: 12px!important;
   display: block;
-  font-weight: 600;
-  margin: 0 0 6px;
+  width: fit-content;
+  font-weight: 400;
+  margin: var(--stroke) 0 0 calc(var(--radius)/3);
+  background-color: var(--dimmed-bg);
+  padding: 3px 6px 2px 8px;
+  border-top-left-radius: calc(var(--radius)/3);
+  border-top-right-radius: calc(var(--radius)/3);
 }
 
 input,
 select,
 textarea {
   width: 100%;
-  border: var(--stroke) solid var(--ink);
-  border-radius: 10px;
+  border: calc(var(--stroke)/2) solid var(--ink);
+  border-radius: calc(var(--radius)/2);
   padding: 12px 12px;
   background: transparent;
   font: inherit;
