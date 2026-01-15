@@ -1,39 +1,127 @@
-/* Bladverkstaden — minimal brutalist system (mobile-first) */
+/* =========================================
+   BLADVERKSTADEN DESIGN SYSTEM V3 (CSS)
+   ========================================= */
+
 :root {
-  --black: #000;
-  --ink: #000;
-  --bg: #fff;
+  /* --- 1. SPACING & GEOMETRY (The Core) --- */
+  --base-unit: 4px; /* The heartbeat of the design */
+  
+  /* Multipliers */
+  --space-1: var(--base-unit);              /* 4px */
+  --space-2: calc(var(--base-unit) * 2);    /* 8px */
+  --space-3: calc(var(--base-unit) * 3);    /* 12px */
+  --space-4: calc(var(--base-unit) * 4);    /* 16px */
+  --space-5: calc(var(--base-unit) * 5);    /* 20px */
+  --space-6: calc(var(--base-unit) * 6);    /* 24px */
+  --space-8: calc(var(--base-unit) * 8);    /* 32px */
+  --space-10: calc(var(--base-unit) * 10);  /* 40px */
+  
+  /* Dimensions */
+  --border-width: var(--base-unit);
+  --border-radius: calc(var(--base-unit) * 3); /* 12px */
+  --shadow-offset: var(--base-unit);
+  
+  /* --- 2. TYPOGRAPHY --- */
+  /* Fonts */
+  --font-logo: 'Nunito', sans-serif;
+  --font-ui: 'Nunito', sans-serif;       /* Buttons, Nav */
+  --font-display: 'Berkshire Swash', cursive; /* H1 */
+  --font-heading: 'Montserrat', sans-serif;   /* H2 */
+  --font-body: 'Montserrat', sans-serif;      /* Body */
+  --font-mono: 'IBM Plex Mono', monospace;    /* Meta, Labels */
+
+  /* Scale */
+  --size-h1: 38px;
+  --size-h2: 24px;
+  --size-h3: 18px;
+  --size-body: 16px;
+  --size-small: 14px;
+
+  /* --- 3. COLORS (Palette) --- */
+  /* Blacks */
+  --pitchblack: #140E00;
+  --pitchblacker: #140B00;
+  --black: #000000;
+  
+  /* Whites & Papers */
+  --floralwhite: #FFFAF0;
+  --bisque: #FFE4C4;
+  --kartong: #d2b48c;
+  --kraft: #d2b48c;
   --paper: #f4efe5;
-  --dimmed-bg: lawngreen;
+  --paper-natural: #EDE1CD;
+  
+  /* Brand Primaries */
+  --cornflowerblue: #6495ED; 
+  --yellow: #FFFF00;
+  
+  /* Brand Accents / Greens */
+  --lawngreen: #7CFC00;
+  --limegreen: #7fff00;
+  --chartreuse: #7fff00;
+  --radioactivegrassgreen: #5CD839;
+  --lemonchiffon: #FFFACD;
+  
+  /* Semantic */
+  --color-warning: #FFFD67;
+  --color-success: #5CD839;
+  --color-error: #E92B53;
+  --amaranthred: #E92B53;
+  --palevioletred: #DB7093;
 
-  --stroke: 4px;
-  --radius: 12px;
-  --gap: 14px;
-  --gap2: 22px;
+  /* --- 4. THEME MAPPING (Light Mode Default) --- */
+  --bg-body: var(--floralwhite);
+  --bg-surface: var(--paper);
+  --bg-surface-alt: var(--bisque);
+  --ink-primary: var(--pitchblack);
+  --ink-secondary: rgba(20, 14, 0, 0.85);
+  --border-color: var(--black);
+  --shadow-color: var(--black);
+  
+  /* Ink Opacities for "Stamped" effect */
+  --opacity-h1: 0.90;
+  --opacity-h2: 0.92;
+  --opacity-p: 0.98;
 
-  --max: 768px;
+  /* --- 5. LEGACY MAPPING (For backwards compatibility with existing HTML classes) --- */
+  --ink: var(--ink-primary);
+  --bg: var(--bg-surface);
+  --stroke: var(--border-width);
+  --radius: var(--border-radius);
+  --gap: var(--space-4);
 }
 
-* {
-  box-sizing: border-box;
+/* Dark Mode Preference (Optional Future Proofing based on system) */
+@media (prefers-color-scheme: dark) {
+  /* Commented out for now as strict light mode seems preferred for "Paper" aesthetic,
+     but ready to implement if "Night Mode" is requested.
+  :root {
+      --bg-body: var(--pitchblack);
+      --bg-surface: #2a2a2a;
+      --ink-primary: var(--floralwhite);
+  }
+  */
 }
 
-html,
-body {
+/* =========================================
+   RESET & GLOBAL STYLES
+   ========================================= */
+* { box-sizing: border-box; }
+
+html, body {
   height: 100%;
 }
 
 body {
   margin: 0;
-  color: var(--ink);
-  background: var(--bg);
-  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.420;
-
-  /* subtle "graph paper" / dots */
-  background-image: radial-gradient(rgba(0, 0, 0, .18) 0.55px, transparent 0.6px);
+  padding: 0; /* Managed by .wrap */
+  background-color: var(--bg-body);
+  color: var(--ink-primary);
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: 1.5;
+  /* subtle "graph paper" / dots from V1 */
+  background-image: radial-gradient(rgba(0, 0, 0, .10) 0.55px, transparent 0.6px);
   background-size: 14px 14px;
   background-attachment: fixed;
 }
@@ -41,6 +129,108 @@ body {
 img {
   max-width: 100%;
   height: auto;
+  display: block;
+}
+
+/* =========================================
+   LAYOUT UTILITIES
+   ========================================= */
+.wrap {
+  /* Mobile First Constraints */
+  max-width: 480px; /* Reduced from 767px per V3 Spec */
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--bg-body);
+  
+  /* Border Simulation for "Page" feel */
+  border-left: 1px dashed var(--border-color);
+  border-right: 1px dashed var(--border-color);
+  
+  /* Padding */
+  padding: var(--space-4);
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-10);
+  
+  box-shadow: 0 0 80px -20px rgba(0, 0, 0, 0.15);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.grid.two {
+  grid-template-columns: 1fr;
+}
+
+/* Mobile-first: 2 columns only on larger screens if needed, 
+   but V3 suggests sticking to strict mobile width. 
+   We keep this for legacy content that might need side-by-side. */
+@media (min-width: 480px) {
+  .grid.two {
+      grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* =========================================
+   TYPOGRAPHY SYSTEM
+   ========================================= */
+h1, h2, h3, p, ul { margin-top: 0; }
+
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--size-h1);
+  color: var(--ink-primary);
+  opacity: var(--opacity-h1);
+  line-height: 1.1;
+  margin-bottom: var(--space-4);
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--size-h2);
+  font-weight: 600;
+  color: var(--ink-primary);
+  opacity: var(--opacity-h2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
+  /* Decorative underline based on border width */
+  border-bottom: var(--border-width) solid var(--border-color);
+  display: inline-block;
+  padding-bottom: var(--space-1);
+  width: 100%; /* Full width underline for sections usually looks better in practice */
+}
+
+h3 {
+  font-family: var(--font-ui);
+  font-size: var(--size-h3);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+p, li {
+  opacity: var(--opacity-p);
+  margin-bottom: var(--space-4);
+}
+
+ul {
+  padding-left: var(--space-4);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--size-small);
+  color: var(--ink-secondary);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.small {
+  font-size: var(--size-small);
 }
 
 a {
@@ -54,276 +244,144 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 3px solid var(--ink);
+  outline: 3px solid var(--ink-primary);
   outline-offset: 2px;
-}
-
-.wrap {
-  max-width: 767px;
-  margin: 0 auto;
-  padding: 0;
-  box-shadow: 0 0 80px -20px rgba(0, 0, 0, 0.15);
-  min-height: 100vh;
-  background: var(--bg);
 }
 
 hr {
   border: 0;
-  display: none;
+  border-top: var(--border-width) dashed var(--border-color);
+  margin: var(--space-8) 0;
 }
 
-.mono {
-  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+/* =========================================
+   COMPONENT: CARDS & SURFACES
+   ========================================= */
+.panel, .card {
+  background-color: var(--bg-surface);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 0 var(--shadow-color);
+  position: relative;
+  margin-bottom: var(--space-6);
 }
 
-.meta {
-  font-size: 12px;
-  letter-spacing: .02em;
+.panel.paper, .card.paper {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
 }
 
-.small {
-  font-size: 14px;
+/* Texture classes */
+.texture-kraft {
+  background-color: var(--kraft);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
 }
 
-#siteFooter .mono.meta {
-  display: none;
-}
-
-h1,
-h2,
-h3 {
-  margin: 0 0 10px;
-  line-height: 1.1;
-}
-
-h1 {
-  font-size: 38px;
-  font-family: "Berkshire Swash", cursive;
-}
-
-h2 {
-    font-size: 24px;
-    font-weight: 600;
-}
-
-h3 {
-  font-size: 18px;
-}
-
-p {
-  margin: 0 0 12px;
-}
-
-ul {
-  margin: 0 0 12px;
-  padding-left: 18px;
-}
-
-li {
-  margin: 6px 0;
-}
-
-.panel {
-  background: var(--bg);
-  border-radius: var(--radius);
-  padding: 16px 16px;
-}
-
-.panel > .panel {
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-.panel.paper {
-  background: transparent;
-}
-
-#siteFooter .panel.paper {
-  background: var(--paper);
-  border-radius: 0;
-}
-
-.grid {
-  display: grid;
-  gap: var(--gap);
-}
-
-.grid.two {
-  grid-template-columns: 1fr;
-}
-
-/* Mobile only design - forced single column
-@media (min-width:680px) {
-  .grid.two { grid-template-columns: 1fr 1fr; }
-}
-*/
-
-.kicker {
-  display: none;
-  /* User requested removal */
-}
-
+/* =========================================
+   COMPONENT: BUTTONS & ACTIONS
+   ========================================= */
 .actions {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: var(--space-6);
   align-items: center;
   justify-items: center;
+  margin-top: var(--space-6);
 }
-
-.or-link {
-    font-size: 16px;
-    display: inline-block;
-    padding: 6px 8px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    text-decoration: none;
-    border-bottom: 2px solid;
-    padding-bottom: 2px;
-    border-end-end-radius: 2px;
-    border-bottom-left-radius: 2px;
-}
-
-/* --- UNDER CONSTRUCTION / HIDING --- */
-/* Hiding menu and footer nav for initial launch */
-#menuOpen,
-.navDesktop,
-.footerNav {
-  display: none !important;
-}
-
-/* Mobile only design - forced single column actions
-@media (min-width:520px) {
-  .actions:has(> :nth-child(2)) { grid-template-columns: 1fr 1fr; }
-}
-*/
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   width: 100%;
-  padding: 14px 14px 12px;
-  border: var(--stroke) solid var(--ink);
-  border-radius: var(--radius);
-  background: var(--bg);
-  white-space: nowrap;
-  box-shadow: var(--stroke) var(--stroke) 0 var(--ink);
-  cursor: pointer;
-  font-family: "Nunito", sans-serif;
+  padding: var(--space-3);
+  font-family: var(--font-ui);
   font-weight: 800;
-  font-size: 18px;
-  line-height: 18px;
-  letter-spacing: 0.03em;
-  text-decoration: none;
+  font-size: 1rem;
   text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 0 var(--shadow-color);
+  transition: transform 0.1s;
+  background-color: var(--paper); /* Default */
+  color: var(--black);
 }
 
 .btn:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 var(--ink);
+  box-shadow: 2px 2px 0 0 var(--shadow-color);
 }
 
-.btn.secondary {
-  box-shadow: none;
-  font-weight: 800;
-  background: transparent;
-  border-color: transparent;
+/* Variants */
+.btn.primary { background-color: var(--yellow); }
+.btn.secondary { 
+  background-color: transparent; 
+  box-shadow: none; 
 }
-
 .btn.secondary:hover {
-  background: rgba(0, 0, 0, 0.04);
+  background-color: rgba(0,0,0,0.05);
 }
 
-.btn.inline {
-  width: auto;
-  padding: 10px 12px;
+/* Link as secondary action ("or-link") */
+.or-link {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 2px;
+  font-size: var(--size-small);
+  text-transform: uppercase;
 }
 
+/* =========================================
+   COMPONENT: HEADER & NAV
+   ========================================= */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 12px 14px 0 14px;
-  border-bottom: var(--stroke) solid var(--black);
-  border-radius: 0;
-  background: var(--bg);
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--space-6);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
-  min-width: 0;
+  gap: var(--space-2);
+  text-decoration: none;
 }
 
 .brand .mark {
-  width: 52px;
+  width: 30px;
   height: auto;
-  border: 0;
-  border-radius: 0;
-  display: inline-block;
-  margin-bottom: -1px;
 }
 
 .brand .name {
-    font-family: "Nunito", sans-serif;
-    font-weight: 700;
-    white-space: nowrap;
-    font-size: 28px;
-}
-
-.navDesktop {
-  display: none;
-  gap: 14px;
-  align-items: center;
-}
-
-.navDesktop a {
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-}
-
-.navDesktop a[aria-current="page"] {
-  border-bottom-color: var(--ink);
-}
-
-.menuBtn {
-  width: auto;
-  padding: 10px 12px;
+  font-family: var(--font-logo);
   font-weight: 800;
-  border-radius: 10px;
-  background: var(--bg);
-  border: var(--stroke) solid var(--ink);
-  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  white-space: nowrap;
 }
 
-/* Mobile only design - force menuBtn visible, desktop nav hidden */
-.menuBtn {
-  display: block !important;
-}
-
-.navDesktop {
-  display: none !important;
-}
-
-/*
-@media (min-width:768px) {
-  .menuBtn { display: none; }
-  .navDesktop { display: flex; }
-}
-*/
-
-/* Fullscreen menu (mobile-first) */
+/* Menu Overlay */
 .menuOverlay {
   position: fixed;
   inset: 0;
-  background: var(--bg);
+  background: var(--bg-body);
   z-index: 999;
   display: none;
-  padding: 14px;
+  padding: var(--space-4);
 }
 
 body[data-menu="open"] .menuOverlay {
@@ -331,275 +389,149 @@ body[data-menu="open"] .menuOverlay {
 }
 
 .menuCard {
-  max-width: var(--max);
-  margin: 0 auto;
-  border: var(--stroke) solid var(--ink);
-  border-radius: var(--radius);
-  padding: 14px;
-  background: var(--paper);
-  min-height: calc(100vh - 28px);
+  background-color: var(--bg-surface);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 0 var(--shadow-color);
+  min-height: calc(100vh - 32px);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-4);
 }
 
-.menuTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.menuClose {
-  border: var(--stroke) solid var(--ink);
-  border-radius: 10px;
-  padding: 10px 12px;
-  background: var(--bg);
+.menuBtn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-ui);
   font-weight: 800;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
-.menuLinks {
-  display: grid;
-  gap: 10px;
-  margin-top: 8px;
+/* Hiding logic for Launch V1.0 */
+#menuOpen, .navDesktop, .footerNav {
+  display: none !important;
 }
 
-.menuLinks a {
+/* =========================================
+   COMPONENT: FORMS
+   ========================================= */
+fieldset {
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--space-4);
+  margin: 0 0 var(--space-4);
+  background: var(--bg-surface);
+}
+
+legend {
+  padding: 0 var(--space-2);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  background: var(--bg-body);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+label {
   display: block;
+  font-family: var(--font-mono);
+  font-size: var(--size-small);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+  text-transform: uppercase;
+}
+
+input, textarea, select {
   width: 100%;
-  text-decoration: none;
+  padding: var(--space-3);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background-color: var(--bg-surface); /* or white? V3 says surface */
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--ink-primary);
+  appearance: none;
+  margin-bottom: var(--space-4);
 }
 
-.sectionLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+input:focus, textarea:focus, select:focus {
+  background-color: var(--lemonchiffon);
 }
 
-.sectionLinks a {
+.input-error {
+  border-color: var(--color-error) !important;
+  background-color: #ffebee !important;
+}
+
+/* Notepad Style for Order Items */
+.itemRow.notepad {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0;
+  padding: var(--space-3) 0;
+  margin-bottom: 0;
+}
+
+.itemRow.notepad input {
+  border: none;
+  border-bottom: 2px solid var(--border-color);
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: bold;
+}
+
+.itemRow.notepad select {
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+/* =========================================
+   COMPONENT: FOOTER
+   ========================================= */
+.footer {
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  text-align: center;
+  border-top: var(--border-width) dashed var(--border-color);
+}
+
+/* =========================================
+   UTILITIES / MISC
+   ========================================= */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--yellow);
+  color: var(--pitchblack);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: 999px;
+  padding: var(--space-1) var(--space-2);
   font-weight: 800;
-  text-decoration: none;
-  border-bottom: 2px solid var(--ink);
+  font-size: var(--size-small);
 }
 
-/* "Nutritional facts" vibe */
+/* Facts Table */
 .facts {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
+  gap: var(--space-2);
 }
 
 .factRow {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  border-bottom: 1px solid rgba(0, 0, 0, .22);
-  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding-bottom: var(--space-1);
 }
 
-.factRow b {
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-weight: 600;
-}
-
-.factRow span {
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-}
-
-/* Forms */
-form {
-  margin: 0;
-}
-
-fieldset {
-  border: var(--stroke) solid var(--ink);
-  border-radius: var(--radius);
-  padding: 14px;
-  margin: 0 0 14px;
-  background: var(--bg);
-}
-
-legend {
-  padding: 0 8px;
-  font-weight: 800;
-}
-
-label {
-  color: var(--ink);
-  font-size: 12px!important;
-  display: block;
-  width: fit-content;
-  font-weight: 400;
-  margin: var(--stroke) 0 0 calc(var(--radius)/3);
-  background-color: var(--dimmed-bg);
-  padding: 3px 6px 2px 8px;
-  border-top-left-radius: calc(var(--radius)/3);
-  border-top-right-radius: calc(var(--radius)/3);
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  border: calc(var(--stroke)/2) solid var(--ink);
-  border-radius: calc(var(--radius)/2);
-  padding: 12px 12px;
-  background: transparent;
-  font: inherit;
-}
-
-textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-.help {
-  margin-top: 6px;
-  color: rgba(0, 0, 0, .78);
-}
-
-.row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-@media (min-width:680px) {
-  .row.two {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .row.three {
-    grid-template-columns: 2fr 1fr 1fr;
-  }
-}
-
-.paperArea {
-  background:
-    linear-gradient(#0000, #0000),
-    repeating-linear-gradient(to bottom,
-      transparent 0px,
-      transparent 22px,
-      rgba(0, 0, 0, .14) 23px);
-  border-radius: 10px;
-}
-
-.itemsHeader {
-  display: none;
-}
-
-@media (min-width:680px) {
-  .itemsHeader {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 12px;
-    margin: 0 0 8px;
-    font-weight: 800;
-  }
-}
-
-/* Notepad style */
-.itemRow.notepad {
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0;
-  padding: 12px 0;
-  margin-bottom: 0;
-}
-
-.itemRow.notepad input[name="qty"] {
-  border: none;
-  border-bottom: 2px solid var(--ink);
-  border-radius: 0;
-  padding: 4px;
-  background: transparent;
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 800;
-  font-size: 16px;
-}
-
-.itemRow.notepad select {
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0;
-  padding: 4px 0;
-  font-weight: 600;
-}
-
-/* Hide labels inside rows for cleaner look (optional, but requested notepad vibe) */
-.itemRow.notepad label {
-  display: none;
-}
-
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: var(--stroke) solid var(--ink);
-  border-radius: 999px;
-  padding: 6px 10px;
-  font-weight: 800;
-  width: fit-content;
-}
-
-.footer {
-  margin-top: 24px;
-  padding-top: 18px;
-  border-top: var(--stroke) solid var(--ink);
-}
-
-.footerGrid {
-  display: grid;
-  gap: 12px;
-}
-
-@media (min-width:680px) {
-  .footerGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* SVG line styles (placeholders for later) */
-svg.bv-illustration {
-  width: 100%;
-  height: auto;
-}
-
-svg.bv-illustration * {
-  vector-effect: non-scaling-stroke;
-  stroke: var(--ink);
-  stroke-width: var(--stroke);
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.stroke-1 * {
-  stroke-width: 1px;
-}
-
-.stroke-2 * {
-  stroke-width: 2px;
-}
-
-.stroke-3 * {
-  stroke-width: 3px;
-}
-
-/* Details / Summary */
-details>summary {
-  list-style: none;
-  cursor: pointer;
-}
-
-details>summary::-webkit-details-marker {
-  display: none;
-}
-
-.input-error {
-  border-color: #d32f2f !important;
-  background-color: #ffebee !important;
-}
+.factRow b { font-family: var(--font-mono); }
+.factRow span { font-family: var(--font-mono); }
