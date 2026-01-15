@@ -1,60 +1,66 @@
 # Bladverkstaden
 
-En minimal, statisk webbplats för Bladverkstaden (Malmö). Byggd för snabbhet och enkelhet utan ramverk eller byggsteg.
-
-> **English:** A minimal, static website for Bladverkstaden. Built for speed and simplicity with no frameworks or build steps.
+A minimal, static website for Bladverkstaden (Malmö). Built for speed, simplicity, and ease of maintenance with **no frameworks** or build steps.
 
 ## ✨ Features
 
-- **No Frameworks:** Ren HTML, CSS och Vanilla JS. Inga `npm install` eller byggprocesser krävs.
-- **Bilingual (SE/EN):** Fullt stöd för Svenska och Engelska med automatisk språkdetektering och speglad struktur (`/en/`).
-- **Order System 2.0:**
-    - **Multi-step:** Uppdelad i "Beställning" och "Leverans" för ökad tydlighet.
-    - **Notepad UI:** Rent, avskalat gränssnitt för att snabbt mata in produkter.
-    - **Persistence:** Innehållet sparas automatiskt i `localStorage` så att inget går förlorat om fliken stängs.
-    - **Reveal Flow:** "Vidare"-knappen visar nästa steg istället för att ladda om sidan.
-- **Mobile First:** Designad specifikt för mobila skärmar (max-width 767px layout).
+- **No Frameworks:** Pure HTML5, CSS3, and Vanilla JS. No `npm install` or build processes required.
+- **Design System V3:** A custom "Paper & Ink" aesthetic featuring:
+  - **Typography:** Berkshire Swash (Display), Nunito (UI), Montserrat (Body), IBM Plex Mono (Data).
+  - **Palette:** Floral White, Pitch Black, and organic accents (Lawngreen, Yellow).
+  - **Mobile-First:** Strictly optimized for mobile screens (max-width 480px layout).
+- **Order System:**
+  - **Multi-step Flow:** Split into "Order" and "Delivery" details.
+  - **Notepad UI:** A stripped-back interface for quickly adding products.
+  - **Persistence:** Form data is automatically saved to `localStorage`.
+  - **Reveal Flow:** Seamless step transitions without page reloads.
+- **Bilingual (SE/EN):** Support for Swedish and English (currently SV only live for v1.0).
 
-## 📂 Struktur / Structure
+## 📂 Structure
 
 ```text
 /
-├── index.html            # Startsida (SE)
-├── order.html            # Orderformulär (SE)
-├── pages/                # Infosidor (Om oss, Historia, Policy) (SE)
-├── en/                   # English version (mirrors root structure)
-│   ├── index.html
-│   ├── order.html
-│   └── pages/
+├── index.html            # Home (SV) - Currently live
+├── order.html            # Order Form (SV) - Currently live
+├── pages/                # Content pages (Hidden for v1.0)
+├── en/                   # English version (Hidden for v1.0)
 ├── assets/
-│   ├── styles.css        # All styling
+│   ├── styles.css        # Global CSS (Design System V3)
 │   ├── app.js            # Main logic (Nav, I18N, Order Form)
 │   ├── config.js         # Configuration (Keys, Endpoints)
 │   └── img/              # Images & SVG
-│       └── social/       # Images for Social Grid
 └── README.md
 ```
 
-## 🛠️ Hur man ändrar / How to edit
+## 🛠️ How to Edit
 
-### Byt bilder i "Instagram-väggen"
-Lägg bilder i `assets/img/social/`. Uppdatera sedan `index.html` (och `en/index.html`) där sektionen "Vänner & kunder" finns. Byt ut placeholder-divarna mot `<img src="assets/img/social/DIN_BILD.jpg">`.
+### Managing Content
+- **Images:** Add social media images to `assets/img/social/` and update `index.html`.
+- **Products:** Edit the product list in `assets/app.js` under `I18N.sv.form.defaultProducts`.
 
-### Lägg till produkter i listan
-Produkterna är definierade i `assets/app.js` under `I18N` objektet:
-- **Svenska:** `I18N.sv.form.defaultProducts`
-- **English:** `I18N.en.form.defaultProducts`
+### Order Configuration
+The site handles orders in two ways (configured in `assets/app.js` via `BV_CONFIG`):
+1.  **Mailto (Default):** Opens the user's email client with pre-filled text. No server required.
+2.  **API/Webhook:** If an `orderEndpoint` is set in `config.js`, data is sent as JSON via POST.
 
-### Konfigurera Order-mail
-Webbplatsen hanterar beställning på två sätt (inställning i `assets/app.js` via `BV_CONFIG`):
-1.  **Mailto (Default):** Öppnar användarens mailklient med en förifylld text. Ingen server behövs.
-2.  **API/Webhook:** Om en `orderEndpoint` anges i `config.js` (eller window-objektet) skickas datan som JSON dit.
+## 🚀 Deployment
 
-## 🚀 Publicering / Deployment
-Sajten är 100% statisk.
-1.  Ladda upp filerna till GitHub / Netlify / Vercel / FTP.
-2.  Klar.
+The site is 100% static and hosted on **GitHub Pages**.
+- **Source:** `main` branch, `/` root.
+- **Domain:** [bladverkstaden.se](https://bladverkstaden.se)
 
-För **GitHub Pages**:
-- Gå till Settings -> Pages.
-- Välj `main` branch och `/` root som source.
+## 🗺️ Roadmap
+
+### v1.0 Launch (Current Status)
+- [x] Initial Release with Minimal Scope (`index.html` & `order.html`)
+- [x] DNS Setup pointing to GitHub Pages
+- [x] **Visual Overhaul (v1.1):** Implemented Design System V3 (New Fonts, Colors, Layout)
+
+### Upcoming Milestones
+- [ ] **Content Expansion (v1.5):**
+    - Unhide sections: "What is Microgreens", "Cultivation", "Friends & Customers".
+    - Update text and images for restored sections.
+    - Re-enable Menu and Footer navigation.
+- [ ] **Order Form Refinement:** Minor updates based on initial usage.
+- [ ] **English Launch:** Finalize and publish the English version (`/en/`).
+- [ ] **v2.0 Release:** Full site launch with all pages (About, History, Policy) active.
