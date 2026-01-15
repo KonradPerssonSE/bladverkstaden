@@ -13,20 +13,21 @@
         { id: "order", label: "Beställ", href: root + "order.html" },
         { id: "about", label: "Om oss", href: root + "pages/about.html" },
         { id: "history", label: "Historia", href: root + "pages/history.html" },
-        { id: "policy", label: "Policy", href: root + "pages/policy.html" }
+        { id: "policy", label: "Policy", href: root + "pages/policy.html" },
       ],
       ui: {
         menu: "MENY",
         close: "STÄNG",
         contact: "KONTAKT",
         contactInfo: "KONTAKT & INFO",
-        footerNote: "Den här sajten är byggd som statiska sidor (HTML/CSS/JS) – enkel att expandera.",
+        footerNote:
+          "Den här sajten är byggd som statiska sidor (HTML/CSS/JS) – enkel att expandera.",
         copyright: "© Bladverkstaden",
         langSwitchLabel: "Switch to English",
         langSwitchUrl: root + "en/index.html",
         langSwitchText: "EN",
         next: "VIDARE",
-        back: "TILLBAKA"
+        back: "TILLBAKA",
       },
       form: {
         removeRow: "X", // Minimal delete
@@ -40,33 +41,49 @@
         statusMail: "Öppna mail-klient",
         statusCopy: "Kopiera text",
         reviewTitle: "Granska & Skicka",
-        reviewIntro: "Kopiera texten och maila till bladverkstaden@gmail.com — eller klicka på knappen.",
+        reviewIntro:
+          "Kopiera texten och maila till bladverkstaden@gmail.com — eller klicka på knappen.",
         copied: "Kopierad!",
         statusFail: "Något gick fel.",
         units: ["Låda"], // Hardcoded for now
-        defaultProducts: ["Rädisa", "Broccoli", "Rödkål", "Koriander", "Senap", "Mizuna", "Kinesisk gräslök", "Mix (blandat)", "Annat"]
-      }
+        defaultProducts: [
+          "Rädisa",
+          "Broccoli",
+          "Rödkål",
+          "Koriander",
+          "Senap",
+          "Mizuna",
+          "Kinesisk gräslök",
+          "Mix (blandat)",
+          "Annat",
+        ],
+      },
     },
     en: {
       nav: [
         /* Removed Home/Microgreens from menu per request */
         { id: "order", label: "Order", href: root + "en/order.html" },
         { id: "about", label: "About", href: root + "en/pages/about.html" },
-        { id: "history", label: "History", href: root + "en/pages/history.html" },
-        { id: "policy", label: "Policy", href: root + "en/pages/policy.html" }
+        {
+          id: "history",
+          label: "History",
+          href: root + "en/pages/history.html",
+        },
+        { id: "policy", label: "Policy", href: root + "en/pages/policy.html" },
       ],
       ui: {
         menu: "MENU",
         close: "CLOSE",
         contact: "CONTACT",
         contactInfo: "CONTACT & INFO",
-        footerNote: "This site is built with static pages (HTML/CSS/JS) – simple to expand.",
+        footerNote:
+          "This site is built with static pages (HTML/CSS/JS) – simple to expand.",
         copyright: "© Bladverkstaden",
         langSwitchLabel: "Byt till Svenska",
         langSwitchUrl: root + "../index.html",
         langSwitchText: "SV",
         next: "PROCEED",
-        back: "BACK"
+        back: "BACK",
       },
       form: {
         removeRow: "X",
@@ -80,13 +97,24 @@
         statusMail: "Open Email Client",
         statusCopy: "Copy to Clipboard",
         reviewTitle: "Review & Send",
-        reviewIntro: "Copy the text and email to bladverkstaden@gmail.com — or click the button.",
+        reviewIntro:
+          "Copy the text and email to bladverkstaden@gmail.com — or click the button.",
         copied: "Copied!",
         statusFail: "Could not send.",
         units: ["Box"],
-        defaultProducts: ["Radish", "Broccoli", "Red Cabbage", "Cilantro", "Mustard", "Mizuna", "Chinese Chives", "Mix", "Other"]
-      }
-    }
+        defaultProducts: [
+          "Radish",
+          "Broccoli",
+          "Red Cabbage",
+          "Cilantro",
+          "Mustard",
+          "Mizuna",
+          "Chinese Chives",
+          "Mix",
+          "Other",
+        ],
+      },
+    },
   };
 
   function getSwitchUrl() {
@@ -98,7 +126,8 @@
       if (currentPath.includes("/pages/")) return root + "../pages/" + filename;
       return root + filename;
     } else {
-      if (currentPath.includes("/pages/")) return root + "../en/pages/" + filename;
+      if (currentPath.includes("/pages/"))
+        return root + "../en/pages/" + filename;
       return root + "en/" + filename;
     }
   }
@@ -113,7 +142,7 @@
   }
 
   function setAriaCurrent(container) {
-    container.querySelectorAll("a[data-nav-id]").forEach(a => {
+    container.querySelectorAll("a[data-nav-id]").forEach((a) => {
       if (a.dataset.navId === page) {
         a.setAttribute("aria-current", "page");
       } else {
@@ -125,44 +154,74 @@
   // Header & Menu logic
   const header = document.getElementById("siteHeader");
   if (header) {
-    header.appendChild(el(`
+    header.appendChild(
+      el(`
       <div class="header" role="banner">
-        <a href="${TXT.nav[0].href.replace('order.html', 'index.html')}" class="brand" style="text-decoration:none">
+        <a href="${TXT.nav[0].href.replace(
+          "order.html",
+          "index.html"
+        )}" class="brand" style="text-decoration:none">
           <div class="mark" aria-hidden="true"><img src="${root}assets/Bladverkstaden-Flower.svg" alt="" style="display:block; width:100%; height:auto;"></div>
           <div class="name">Bladverkstaden</div>
         </a>
         <nav class="navDesktop" aria-label="Menu">
-          ${TXT.nav.map(n => `<a data-nav-id="${n.id}" href="${n.href}">${n.label}</a>`).join("")}
-          <a href="${TXT.ui.langSwitchUrl}" class="mono" style="margin-left:8px; font-size:14px; border-bottom:1px dashed currentColor" aria-label="${TXT.ui.langSwitchLabel}">${TXT.ui.langSwitchText}</a>
+          ${TXT.nav
+            .map(
+              (n) => `<a data-nav-id="${n.id}" href="${n.href}">${n.label}</a>`
+            )
+            .join("")}
+          <a href="${
+            TXT.ui.langSwitchUrl
+          }" class="mono" style="margin-left:8px; font-size:14px; border-bottom:1px dashed currentColor" aria-label="${
+        TXT.ui.langSwitchLabel
+      }">${TXT.ui.langSwitchText}</a>
         </nav>
-        <button class="menuBtn" id="menuOpen" type="button">☰ ${TXT.ui.menu}</button>
+        <button class="menuBtn" id="menuOpen" type="button">☰ ${
+          TXT.ui.menu
+        }</button>
       </div>
-    `));
+    `)
+    );
     setAriaCurrent(header);
   }
 
   const overlay = document.getElementById("menuOverlay");
   if (overlay) {
-    overlay.appendChild(el(`
+    overlay.appendChild(
+      el(`
       <div class="menuCard" role="dialog" aria-modal="true" aria-label="Meny">
         <div class="menuTop">
           <div class="brand">
             <div class="mark" aria-hidden="true"><img src="${root}assets/Bladverkstaden-Flower.svg" alt="" style="display:block; width:100%; height:auto;"></div>
             <div class="name">Bladverkstaden</div>
           </div>
-          <button class="menuClose" id="menuClose" type="button">✕ ${TXT.ui.close}</button>
+          <button class="menuClose" id="menuClose" type="button">✕ ${
+            TXT.ui.close
+          }</button>
         </div>
         <div class="menuLinks">
-          ${TXT.nav.map(n => `<a class="btn secondary" data-nav-id="${n.id}" href="${n.href}">${n.label}</a>`).join("")}
-          <a class="btn secondary" href="${TXT.ui.langSwitchUrl}" style="margin-top:10px; border:1px dashed var(--ink)">${TXT.ui.langSwitchText} — ${TXT.ui.langSwitchLabel}</a>
+          ${TXT.nav
+            .map(
+              (n) =>
+                `<a class="btn secondary" data-nav-id="${n.id}" href="${n.href}">${n.label}</a>`
+            )
+            .join("")}
+          <a class="btn secondary" href="${
+            TXT.ui.langSwitchUrl
+          }" style="margin-top:10px; border:1px dashed var(--ink)">${
+        TXT.ui.langSwitchText
+      } — ${TXT.ui.langSwitchLabel}</a>
         </div>
         <div class="panel paper mono meta" style="margin-top:auto">
-          <div><b>${TXT.ui.contact}:</b> <a href="mailto:bladverkstaden@gmail.com">bladverkstaden@gmail.com</a></div>
+          <div><b>${
+            TXT.ui.contact
+          }:</b> <a href="mailto:bladverkstaden@gmail.com">bladverkstaden@gmail.com</a></div>
           <div><b>Telefon:</b> <a href="tel:+46767751826">076 775 18 26</a></div>
           <div><b>Adress:</b> Augustenborgsgatan 18, Malmö</div>
         </div>
       </div>
-    `));
+    `)
+    );
     const openBtn = document.getElementById("menuOpen");
     const closeBtn = document.getElementById("menuClose");
 
@@ -180,28 +239,38 @@
   // Footer
   const footer = document.getElementById("siteFooter");
   if (footer) {
-    footer.appendChild(el(`
+    footer.appendChild(
+      el(`
       <div class="footer">
         <div class="grid two">
-          <div class="panel">
-            <div class="mono meta" style="margin-bottom:12px; font-weight:800">${TXT.ui.menu}</div>
+          <div class="panel silent">
             <nav class="footerNav">
-              ${TXT.nav.map(n => `<a href="${n.href}" style="display:block; text-decoration:none; font-weight:600; margin-bottom:8px">${n.label}</a>`).join("")}
+              ${TXT.nav
+                .map(
+                  (n) =>
+                    `<a href="${n.href}" style="display:block; text-decoration:none; font-weight:600; margin-bottom:8px">${n.label}</a>`
+                )
+                .join("")}
             </nav>
           </div>
-          <div class="panel paper">
+          <div class="panel silent">
              <div style="margin-bottom:12px;align-items: center;display: flex;flex-direction: column;"><img src="${root}assets/Bladverkstaden-Huset.svg" alt="" style="max-width: 100%;"></div>
-            <div class="mono meta" style="margin-bottom:12px; font-weight:800">${TXT.ui.contactInfo}</div>
+            <div class="mono meta" style="margin-bottom:12px; font-weight:800">${
+              TXT.ui.contactInfo
+            }</div>
             <div class="mono small">
               <a href="mailto:bladverkstaden@gmail.com">bladverkstaden@gmail.com</a><br>
               <a href="tel:+46767751826">076 775 18 26</a><br>Augustenborgsgatan 18, Malmö
             </div>
             <div style="height:14px"></div>
-            <p class="mono meta">${TXT.ui.copyright} ${(new Date()).getFullYear()}</p>
+            <p class="mono meta">${
+              TXT.ui.copyright
+            } ${new Date().getFullYear()}</p>
           </div>
         </div>
       </div>
-    `));
+    `)
+    );
   }
 
   // Order form logic
@@ -228,23 +297,28 @@
       const data = {
         step: step2 && !step2.hidden ? 2 : 1,
         fields: {},
-        items: []
+        items: [],
       };
       // Save basic inputs
       const formEls = form.elements;
       for (let i = 0; i < formEls.length; i++) {
         const field = formEls[i];
-        if (field.name && field.type !== "hidden" && field.type !== "submit" && field.type !== "button") {
+        if (
+          field.name &&
+          field.type !== "hidden" &&
+          field.type !== "submit" &&
+          field.type !== "button"
+        ) {
           data.fields[field.name] = field.value;
         }
       }
       // Save items
       const itemRows = items.querySelectorAll(".itemRow");
-      itemRows.forEach(row => {
+      itemRows.forEach((row) => {
         data.items.push({
           product: row.querySelector('[name="product"]').value,
           qty: row.querySelector('[name="qty"]').value,
-          lineNote: row.querySelector('[name="lineNote"]').value
+          lineNote: row.querySelector('[name="lineNote"]').value,
         });
       });
       localStorage.setItem("bv_order_state", JSON.stringify(data));
@@ -264,7 +338,7 @@
         // Restore items
         items.innerHTML = "";
         if (data.items && data.items.length > 0) {
-          data.items.forEach(it => addRow(it));
+          data.items.forEach((it) => addRow(it));
         } else {
           addRow();
         }
@@ -288,9 +362,13 @@
 
     // --- Global Validation Styling ---
     // Capture 'invalid' events (which don't bubble) to apply styling
-    form.addEventListener("invalid", (e) => {
-      e.target.classList.add("input-error");
-    }, true);
+    form.addEventListener(
+      "invalid",
+      (e) => {
+        e.target.classList.add("input-error");
+      },
+      true
+    );
 
     // Remove syling on input
     form.addEventListener("input", (e) => {
@@ -299,19 +377,29 @@
       }
     });
 
-
     // --- Item Logic (Notepad Style) ---
     function itemRow(data = {}) {
-      const opts = PRODUCTS.map(p => `<option value="${p}" ${data.product === p ? "selected" : ""}>${p}</option>`).join("");
+      const opts = PRODUCTS.map(
+        (p) =>
+          `<option value="${p}" ${
+            data.product === p ? "selected" : ""
+          }>${p}</option>`
+      ).join("");
       return el(`
         <div class="itemRow notepad">
           <div style="display:grid; grid-template-columns: 2fr 1fr 30px; gap:8px; align-items:center;">
-             <select name="product" aria-label="${TXT.form.product}">${opts}</select>
-             <input name="qty" type="number" placeholder="#" value="${data.qty || ""}" aria-label="${TXT.form.qty}" style="text-align:center" />
+             <select name="product" aria-label="${
+               TXT.form.product
+             }">${opts}</select>
+             <input name="qty" type="number" placeholder="#" value="${
+               data.qty || ""
+             }" aria-label="${TXT.form.qty}" style="text-align:center" />
              <button class="btn secondary inline mono" type="button" data-remove style="padding:0; height:40px; border:none; color:red; font-size:20px;">×</button>
           </div>
           <div style="margin-top:6px;">
-             <input name="lineNote" placeholder="${TXT.form.lineNote}" value="${data.lineNote || ""}" class="small" style="border:none; border-bottom:1px dashed #ccc; padding:4px 0; border-radius:0;" />
+             <input name="lineNote" placeholder="${TXT.form.lineNote}" value="${
+        data.lineNote || ""
+      }" class="small" style="border:none; border-bottom:1px dashed #ccc; padding:4px 0; border-radius:0;" />
           </div>
         </div>
       `);
@@ -326,8 +414,10 @@
       items.appendChild(row);
     }
 
-    addBtn?.addEventListener("click", () => { addRow(); saveState(); });
-
+    addBtn?.addEventListener("click", () => {
+      addRow();
+      saveState();
+    });
 
     // --- Steps Logic ---
     function checkVisibility() {
@@ -359,16 +449,19 @@
     btnNext?.addEventListener("click", goToStep2);
     // btnBack?.addEventListener("click", goToStep1);
 
-
     // --- Submit Logic ---
-    function getValue(name) { return (form.elements[name]?.value || "").trim(); }
+    function getValue(name) {
+      return (form.elements[name]?.value || "").trim();
+    }
 
     function collectItems() {
       const out = [];
-      items.querySelectorAll(".itemRow").forEach(r => {
+      items.querySelectorAll(".itemRow").forEach((r) => {
         const product = r.querySelector('select[name="product"]').value;
         const qty = (r.querySelector('input[name="qty"]').value || "").trim();
-        const lineNote = (r.querySelector('input[name="lineNote"]').value || "").trim();
+        const lineNote = (
+          r.querySelector('input[name="lineNote"]').value || ""
+        ).trim();
         if (qty) {
           out.push({ product, qty, unit: "Box", lineNote });
         }
@@ -384,17 +477,29 @@
 
     function buildPlainText(payload) {
       const lines = ["ORDER (" + lang.toUpperCase() + ")", ""];
-      lines.push(`Who: ${payload.firstName} ${payload.lastName} (${payload.customerType})`);
+      lines.push(
+        `Who: ${payload.firstName} ${payload.lastName} (${payload.customerType})`
+      );
       lines.push(`Email: ${payload.email}`);
       lines.push(`Phone: ${payload.phone}`);
       lines.push("");
-      if (payload.company) lines.push(`Company: ${payload.company} (Org: ${payload.orgNr})`);
-      if (payload.invoiceEmail) lines.push(`Invoice Email: ${payload.invoiceEmail}`);
+      if (payload.company)
+        lines.push(`Company: ${payload.company} (Org: ${payload.orgNr})`);
+      if (payload.invoiceEmail)
+        lines.push(`Invoice Email: ${payload.invoiceEmail}`);
       lines.push("");
       lines.push("ITEMS:");
-      payload.items.forEach(it => lines.push(`- ${it.qty} x ${it.product} ${it.lineNote ? "(" + it.lineNote + ")" : ""}`));
+      payload.items.forEach((it) =>
+        lines.push(
+          `- ${it.qty} x ${it.product} ${
+            it.lineNote ? "(" + it.lineNote + ")" : ""
+          }`
+        )
+      );
       lines.push("");
-      lines.push(`Delivery: ${payload.deliveryAddress} (${payload.deliveryWhen})`);
+      lines.push(
+        `Delivery: ${payload.deliveryAddress} (${payload.deliveryWhen})`
+      );
       if (payload.notes) lines.push("Notes:\n" + payload.notes);
       return lines.join("\n");
     }
@@ -416,7 +521,7 @@
         recurring: getValue("recurring"),
         items: collectItems(),
         notes: getValue("notes"),
-        sentAt: new Date().toISOString()
+        sentAt: new Date().toISOString(),
       };
 
       if (payload.items.length === 0) {
@@ -425,13 +530,25 @@
       }
 
       // ... existing send logic ...
-      const endpoint = (window.BV_CONFIG && window.BV_CONFIG.orderEndpoint) ? window.BV_CONFIG.orderEndpoint.trim() : "";
-      const toEmail = (window.BV_CONFIG && window.BV_CONFIG.orderToEmail) ? window.BV_CONFIG.orderToEmail : "bladverkstaden@gmail.com";
-      const subjPrefix = (window.BV_CONFIG && window.BV_CONFIG.orderSubjectPrefix) ? window.BV_CONFIG.orderSubjectPrefix : "Order";
+      const endpoint =
+        window.BV_CONFIG && window.BV_CONFIG.orderEndpoint
+          ? window.BV_CONFIG.orderEndpoint.trim()
+          : "";
+      const toEmail =
+        window.BV_CONFIG && window.BV_CONFIG.orderToEmail
+          ? window.BV_CONFIG.orderToEmail
+          : "bladverkstaden@gmail.com";
+      const subjPrefix =
+        window.BV_CONFIG && window.BV_CONFIG.orderSubjectPrefix
+          ? window.BV_CONFIG.orderSubjectPrefix
+          : "Order";
 
       try {
         if (endpoint) {
-          await fetch(endpoint, { method: "POST", body: JSON.stringify(payload) });
+          await fetch(endpoint, {
+            method: "POST",
+            body: JSON.stringify(payload),
+          });
           setStatus("OK", TXT.form.statusOk);
           clearState();
           form.reset();
@@ -448,11 +565,14 @@
         // Manual Review Flow (No Auto-Reset)
         const subject = `${subjPrefix} - ${payload.firstName} ${payload.lastName}`;
         const body = buildPlainText(payload);
-        const mailtoLink = `mailto:${encodeURIComponent(toEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const mailtoLink = `mailto:${encodeURIComponent(
+          toEmail
+        )}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+          body
+        )}`;
 
         showReviewModal(body, mailtoLink);
         clearState(); // We assume they will send it
-
       } catch (err) {
         setStatus("ERR", TXT.form.statusFail);
       }
@@ -478,7 +598,7 @@
         el.select();
         navigator.clipboard.writeText(el.value).then(() => {
           e.target.innerText = TXT.form.copied;
-          setTimeout(() => e.target.innerText = TXT.form.statusCopy, 2000);
+          setTimeout(() => (e.target.innerText = TXT.form.statusCopy), 2000);
         });
       });
     }

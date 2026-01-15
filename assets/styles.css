@@ -5,6 +5,7 @@
 :root {
   /* --- 1. SPACING & GEOMETRY (The Core) --- */
   --base-unit: 4px; /* The heartbeat of the design */
+  --site-max-width: 740px;
   
   /* Multipliers */
   --space-1: var(--base-unit);              /* 4px */
@@ -35,7 +36,7 @@
   --size-h2: 24px;
   --size-h3: 18px;
   --size-body: 16px;
-  --size-small: 14px;
+  --size-small: 13px;
 
   /* --- 3. COLORS (Palette) --- */
   /* Blacks */
@@ -71,16 +72,16 @@
 
   /* --- 4. THEME MAPPING (Light Mode Default) --- */
   --bg-body: var(--floralwhite);
-  --bg-surface: var(--paper);
+  --bg-surface: oklch(1 0 0 / 0.8);
   --bg-surface-alt: var(--bisque);
   --ink-primary: var(--pitchblack);
   --ink-secondary: rgba(20, 14, 0, 0.85);
-  --border-color: var(--black);
-  --shadow-color: var(--black);
+  --border-color: oklch(0 0 0 / 0.92);
+  --shadow-color: oklch(0 0 0 / 0.9);
   
   /* Ink Opacities for "Stamped" effect */
-  --opacity-h1: 0.90;
-  --opacity-h2: 0.92;
+  --opacity-h1: 0.92;
+  --opacity-h2: 0.96;
   --opacity-p: 0.98;
 
   /* --- 5. LEGACY MAPPING (For backwards compatibility with existing HTML classes) --- */
@@ -137,21 +138,15 @@ img {
    ========================================= */
 .wrap {
   /* Mobile First Constraints */
-  max-width: 480px; /* Reduced from 767px per V3 Spec */
+  max-width: var(--site-max-width);
   margin: 0 auto;
   min-height: 100vh;
-  background: var(--bg-body);
-  
-  /* Border Simulation for "Page" feel */
-  border-left: 1px dashed var(--border-color);
-  border-right: 1px dashed var(--border-color);
   
   /* Padding */
   padding: var(--space-4);
   padding-top: var(--space-4);
   padding-bottom: var(--space-10);
   
-  box-shadow: 0 0 80px -20px rgba(0, 0, 0, 0.15);
 }
 
 .grid {
@@ -171,6 +166,8 @@ img {
       grid-template-columns: 1fr 1fr;
   }
 }
+
+
 
 /* =========================================
    TYPOGRAPHY SYSTEM
@@ -192,21 +189,18 @@ h2 {
   font-weight: 600;
   color: var(--ink-primary);
   opacity: var(--opacity-h2);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   margin-bottom: var(--space-3);
-  /* Decorative underline based on border width */
-  border-bottom: var(--border-width) solid var(--border-color);
   display: inline-block;
   padding-bottom: var(--space-1);
   width: 100%; /* Full width underline for sections usually looks better in practice */
 }
 
 h3 {
-  font-family: var(--font-ui);
+  font-family: var(--font-heading);
   font-size: var(--size-h3);
+  letter-spacing: 0.02em;
   font-weight: 800;
-  text-transform: uppercase;
   margin-bottom: var(--space-2);
 }
 
@@ -254,6 +248,12 @@ hr {
   margin: var(--space-8) 0;
 }
 
+svg.lucide {
+  width: 42px;
+  height: 42px;
+  stroke-width: 1.8px;
+}
+
 /* =========================================
    COMPONENT: CARDS & SURFACES
    ========================================= */
@@ -267,11 +267,12 @@ hr {
   margin-bottom: var(--space-6);
 }
 
-.panel.paper, .card.paper {
+main > .panel, .panel.silent {
   background-color: transparent;
-  box-shadow: none;
-  border: none;
-  padding: 0;
+  border: unset;
+  border-radius: unset;
+  padding: unset;
+  box-shadow: unset;
 }
 
 /* Texture classes */
@@ -300,7 +301,8 @@ hr {
   padding: var(--space-3);
   font-family: var(--font-ui);
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
@@ -308,7 +310,7 @@ hr {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-offset) var(--shadow-offset) 0 0 var(--shadow-color);
   transition: transform 0.1s;
-  background-color: var(--paper); /* Default */
+  background-color: #FFF;
   color: var(--black);
 }
 
@@ -345,33 +347,30 @@ hr {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  padding: var(--space-3);
-  background: var(--bg-surface);
-  border: var(--border-width) solid var(--border-color);
-  border-radius: var(--border-radius);
-  margin-bottom: var(--space-6);
+  justify-content: flex-start
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
   text-decoration: none;
 }
 
 .brand .mark {
-  width: 30px;
+  width: 55px;
+  margin-left: -2px;
+  margin-right: 12px;
   height: auto;
+  opacity: var(--opacity-h2);
 }
 
 .brand .name {
   font-family: var(--font-logo);
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 36px;
+  margin-top: 12px;
   white-space: nowrap;
+  opacity: var(--opacity-h2);
 }
 
 /* Menu Overlay */
@@ -434,64 +433,81 @@ legend {
   border-radius: 4px;
 }
 
-label {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: var(--size-small);
-  font-weight: 600;
-  margin-bottom: var(--space-1);
-  text-transform: uppercase;
+.form-group {
+  display: flex;
+  flex-direction: column-reverse;
 }
+
+label {
+  display: inline-block;
+  width: fit-content;
+  font-family: var(--font-ui);
+  font-size: var(--size-small);
+  letter-spacing: 0.1em;
+  font-weight: 800;
+  padding: var(--space-1) var(--space-2) 1px var(--space-2);
+  margin-left: calc(var(--base-unit)*2);
+  text-transform: uppercase;
+  position: relative;
+  background-color: var(--cornflowerblue);
+  border: calc(var(--base-unit)/2) solid;
+  border-radius: var(--base-unit) var(--base-unit) 0 0;
+  margin-bottom: -3px;
+  box-shadow: inset -1px -4px 3px #00000033;
+  opacity: 0.92;
+}
+
+.form-group input:required + label:after, .form-group textarea:required + label:after, .form-group select:required + label:after {
+    position: absolute;
+    font-size: 16px;
+    height: 14px;
+    line-height: 20px;
+    top: -2px;
+    margin-left: 14px;
+    padding-left: var(--base-unit);
+    padding-right: var(--base-unit);
+    border: 2px solid oklch(0.29 0.02 75.47 / 0.72);
+    border-radius: 3px;
+    background-color: var(--kartong);
+    content: '*';
+    color: var(--amaranthred);
+    opacity: 0.8;
+}
+
 
 input, textarea, select {
   width: 100%;
   padding: var(--space-3);
   font-family: var(--font-body);
   font-size: 1rem;
-  background-color: var(--bg-surface); /* or white? V3 says surface */
+  background-color: var(--bg-surface);
   border: var(--border-width) solid var(--border-color);
   border-radius: var(--border-radius);
   color: var(--ink-primary);
   appearance: none;
   margin-bottom: var(--space-4);
 }
+/*
 
-input:focus, textarea:focus, select:focus {
-  background-color: var(--lemonchiffon);
+kålrabbi, ruccola,
+DL måndag 12:00
+
+*/
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  z-index: 2;
+  box-shadow: 3px 3px 10px var(--yellow), -3px -3px #fff;
+}
+
+.form-group input:focus + label, .form-group textarea:focus + label, .form-group select:focus + label {
+  margin-bottom: 0;
+  border-bottom-color: var(--cornflowerblue);
+  z-index: 1;
+  box-shadow: inset 0 -8px 10px #00000054;
 }
 
 .input-error {
   border-color: var(--color-error) !important;
   background-color: #ffebee !important;
-}
-
-/* Notepad Style for Order Items */
-.itemRow.notepad {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  border-radius: 0;
-  padding: var(--space-3) 0;
-  margin-bottom: 0;
-}
-
-.itemRow.notepad input {
-  border: none;
-  border-bottom: 2px solid var(--border-color);
-  border-radius: 0;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  font-family: var(--font-mono);
-  font-weight: bold;
-}
-
-.itemRow.notepad select {
-  border: none;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
-  background: transparent;
-  padding: 0;
-  margin: 0;
 }
 
 /* =========================================
@@ -500,8 +516,6 @@ input:focus, textarea:focus, select:focus {
 .footer {
   margin-top: var(--space-8);
   padding-top: var(--space-4);
-  text-align: center;
-  border-top: var(--border-width) dashed var(--border-color);
 }
 
 /* =========================================
@@ -535,3 +549,12 @@ input:focus, textarea:focus, select:focus {
 
 .factRow b { font-family: var(--font-mono); }
 .factRow span { font-family: var(--font-mono); }
+
+@media (min-width: 740px) {
+  .btn {
+    max-width: 360px;
+  }
+  .actions {
+    justify-items: left;
+  }
+}

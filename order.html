@@ -52,34 +52,37 @@
             <fieldset>
               <legend class="mono">Vem beställer?</legend>
               <div class="row two">
-                <div>
-                  <label class="mono meta" for="customerType">Kundtyp *</label>
+                <div class="form-group">
+                  
                   <select id="customerType" name="customerType" required>
                     <option value="Restaurang / Kök">Restaurang / Kök</option>
                     <option value="Företag">Företag</option>
                     <option value="Privat (Endast Malmö)">Privat (Endast Malmö)</option>
                     <option value="Annat">Annat</option>
                   </select>
+                  <label for="customerType">Kundtyp</label>
                 </div>
               </div>
               <div class="row two">
-                <div>
-                  <label class="mono meta" for="firstName">Förnamn *</label>
+                <div class="form-group">
+                  
                   <input id="firstName" name="firstName" required placeholder="Förnamn" />
+                  <label for="firstName">Förnamn</label>
                 </div>
-                <div>
-                  <label class="mono meta" for="lastName">Efternamn *</label>
+                <div class="form-group">
+                  
                   <input id="lastName" name="lastName" required placeholder="Efternamn" />
+                  <label for="lastName">Efternamn</label>
                 </div>
               </div>
               <div class="row two">
-                <div>
-                  <label class="mono meta" for="email">E-post *</label>
+                <div class="form-group">
                   <input id="email" name="email" type="email" required placeholder="namn@domän.se" />
+                  <label for="email">E-post</label>
                 </div>
-                <div>
-                  <label class="mono meta" for="phone">Telefon *</label>
+                <div class="form-group">
                   <input id="phone" name="phone" inputmode="tel" required placeholder="07x..." />
+                  <label for="phone">Telefon</label>
                 </div>
               </div>
             </fieldset>
@@ -108,23 +111,24 @@
               <fieldset>
                 <legend class="mono">Leverans</legend>
                 <div class="row two">
-                  <div>
-                    <label class="mono meta" for="deliveryAddress">Leveransadress *</label>
+                  <div class="form-group">
+                    
                     <textarea id="deliveryAddress" name="deliveryAddress" class="paperArea mono" rows="3" required
                       placeholder="Gata, Postnummer, Ort"></textarea>
+                      <label for="deliveryAddress">Leveransadress</label>
                   </div>
-                  <div>
-                    <label class="mono meta" for="deliveryWhen">Önskad leverans</label>
+                  <div class="form-group">
                     <input id="deliveryWhen" name="deliveryWhen" placeholder="t.ex. vecka 2, tisdag" />
-
-                    <div style="height:12px"></div>
-                    <label class="mono meta" for="recurring">Återkommande?</label>
+                    <label for="deliveryWhen">Önskad leverans</label>
+                  </div>
+                  <div class="form-group">
                     <select id="recurring" name="recurring">
                       <option value="Engångs">Engångs</option>
                       <option value="Varje vecka">Varje vecka</option>
                       <option value="Varannan vecka">Varannan vecka</option>
                       <option value="Vid behov">Vid behov</option>
                     </select>
+                     <label for="recurring">Återkommande?</label>
                   </div>
                 </div>
               </fieldset>
@@ -132,18 +136,19 @@
               <fieldset id="invoiceDetails">
                 <legend class="mono">Faktura & Företag</legend>
                 <div class="row two">
-                  <div>
-                    <label class="mono meta" for="company">Företag / Restaurang *</label>
+                  <div class="form-group">
                     <input id="company" name="company" placeholder="Företagsnamn" />
+                    <label for="company">Företag / Restaurang</label>
                   </div>
-                  <div>
-                    <label class="mono meta" for="orgNr">Org.nr</label>
+                  <div class="form-group">
+                    
                     <input id="orgNr" name="orgNr" placeholder="55xxxx-xxxx" />
+                    <label for="orgNr">Org.nr</label>
                   </div>
                 </div>
-                <div style="margin-top:12px">
-                  <label class="mono meta" for="invoiceEmail">Faktura E-post (om annan)</label>
+                <div class="form-group">
                   <input id="invoiceEmail" name="invoiceEmail" type="email" placeholder="faktura@..." />
+                  <label for="invoiceEmail">Faktura E-post (om annan)</label>
                 </div>
               </fieldset>
 
