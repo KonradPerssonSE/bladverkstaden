@@ -453,7 +453,7 @@ label {
   border: calc(var(--base-unit)/2) solid;
   border-radius: var(--base-unit) var(--base-unit) 0 0;
   margin-bottom: -3px;
-  box-shadow: inset -1px -4px 3px #00000033;
+  box-shadow: inset -1px -2px 3px oklch(0.57 0.14 261.35 / 0.75);
   opacity: 0.92;
 }
 
@@ -483,16 +483,11 @@ input, textarea, select {
   background-color: var(--bg-surface);
   border: var(--border-width) solid var(--border-color);
   border-radius: var(--border-radius);
-  color: var(--ink-primary);
+  color: #000;
   appearance: none;
   margin-bottom: var(--space-4);
 }
-/*
 
-kålrabbi, ruccola,
-DL måndag 12:00
-
-*/
 .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
   z-index: 2;
   box-shadow: 3px 3px 10px var(--yellow), -3px -3px #fff;
@@ -502,7 +497,7 @@ DL måndag 12:00
   margin-bottom: 0;
   border-bottom-color: var(--cornflowerblue);
   z-index: 1;
-  box-shadow: inset 0 -8px 10px #00000054;
+  box-shadow: inset -1px -8px 8px -1px oklch(0.37 0.1 261.35 / 0.7);
 }
 
 .input-error {

@@ -28,15 +28,20 @@
     <main>
       <section class="panel">
         <div style="height:12px"></div>
-        <h1>Skicka din lista.</h1>
+        <h1>Beställ våra Microgreens</h1>
         <p>
-          Tänk "inköpslista": snabbt, tydligt, inget krångel.
-          Dina uppgifter sparas automatiskt i webbläsaren om du stänger sidan.
-        </p>
+          Här har du ett snabbt, tydligt, sätt att beställa våra microgreens.<br></p>
+          1. Fyll i dina kontaktuppgifter.<br>
+          2. Gör en lista med din beställning.<br>
+          3. Välj när, var och hur ofta du vill ha din leverans.
+          </p>
 
-        <div class="panel paper mono meta">
-          <b>Planering:</b> För att minska svinn odlar vi mest på beställning. Räkna med ca 2 veckors ledtid
-          (vissa sorter längre).
+        <div class="panel silent paper mono meta" style="margin-top:32px">
+          <p>
+          Fält märkta med "*" är obligatoriska. Dina uppgifter sparas automatiskt i din webbläsare om du stänger sidan. Vid frågor, ring Gunnar på <a href="tel:0046767751826">076 775 18 26</a>
+        </p>
+          <p><strong>Observera:</strong> För att minska svinn odlar vi nästan enbart på beställning. <br>
+          Om du vill ha något idag/imorgon eller snabbare än om ~2 veckor så är det bäst att du ringer direkt till din grossist/leverantör, vi har sällan något "extra" över.
         </div>
       </section>
 
@@ -50,13 +55,13 @@
             <div style="height:12px"></div>
 
             <fieldset>
-              <legend class="mono">Vem beställer?</legend>
+              <legend class="mono">Kontaktuppgifter</legend>
               <div class="row two">
                 <div class="form-group">
                   
                   <select id="customerType" name="customerType" required>
-                    <option value="Restaurang / Kök">Restaurang / Kök</option>
-                    <option value="Företag">Företag</option>
+                    <option value="Restaurang / Kök" selected>Restaurang / Kök</option>
+                    <option value="Företag" >Företag</option>
                     <option value="Privat (Endast Malmö)">Privat (Endast Malmö)</option>
                     <option value="Annat">Annat</option>
                   </select>
@@ -88,7 +93,7 @@
             </fieldset>
 
             <fieldset>
-              <legend class="mono">Din lista</legend>
+              <legend class="mono">Lista beställning</legend>
               <div class="mono meta" style="margin-bottom:8px">Enhet: Låda/Tråg (14x14cm)</div>
 
               <div id="orderItems"></div> <!-- JS injects "Notepad" rows here -->
@@ -124,11 +129,11 @@
                   <div class="form-group">
                     <select id="recurring" name="recurring">
                       <option value="Engångs">Engångs</option>
-                      <option value="Varje vecka">Varje vecka</option>
+                      <option value="Varje vecka" selected>Varje vecka</option>
                       <option value="Varannan vecka">Varannan vecka</option>
                       <option value="Vid behov">Vid behov</option>
                     </select>
-                     <label for="recurring">Återkommande?</label>
+                     <label for="recurring">Återkommande beställning?</label>
                   </div>
                 </div>
               </fieldset>

@@ -47,15 +47,15 @@
         statusFail: "Något gick fel.",
         units: ["Låda"], // Hardcoded for now
         defaultProducts: [
-          "Rädisa",
           "Broccoli",
-          "Rödkål",
-          "Koriander",
-          "Senap",
-          "Mizuna",
           "Kinesisk gräslök",
-          "Mix (blandat)",
-          "Annat",
+          "Koriander",
+          "Kålrabbi",
+          "Mizuna",
+          "Kålrabbi",
+          "Rädisa",
+          "Rödkål",
+          "Senap",
         ],
       },
     },
@@ -392,7 +392,7 @@
                TXT.form.product
              }">${opts}</select>
              <input name="qty" type="number" placeholder="#" value="${
-               data.qty || ""
+               data.qty || "8"
              }" aria-label="${TXT.form.qty}" style="text-align:center" />
              <button class="btn secondary inline mono" type="button" data-remove style="padding:0; height:40px; border:none; color:red; font-size:20px;">×</button>
           </div>
